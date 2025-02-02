@@ -1,4 +1,5 @@
 package com.unir.roleapp.enumm;
 
-public class RoleClass {
+public enum RoleClass {
+    BARD, WIZARD, WARRIOR
 }

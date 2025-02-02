@@ -72,7 +72,7 @@ Service >> Aplica la lógica de negocio(validaciones) y llama al REpository para
 
 
 
-## LOs modelos y las entidades
+## Modelos y entidades
 
 - **Entity**:  Las entidades representan las tablas de la base de datos. Son las clases vinculadas a la persistencia, utilizando anotaciones de JPA. Están ligadas a la base de datos (por ejemplo, a través de @Entity, @Table, @Id, etc.). Pueden tener relaciones de tipo @OneToMany, @ManyToOne, 
 

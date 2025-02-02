@@ -7,21 +7,20 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.util.List;
 @Entity
-@Table(name = "user")
+@Table(name = "user_table")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @NamedQuery( name = "Usuario.findAll", query = "FROM User" )
 @ToString
-public class User implements Serializable {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     private String nombreUsuario;
@@ -30,5 +29,5 @@ public class User implements Serializable {
     private String contraseña;
 
     @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
-    private List<Character> characters;
+    private List<CharacterEntity> characterEntities;
 }
