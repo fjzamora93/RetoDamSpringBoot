@@ -1,6 +1,9 @@
 
-# Árbol de directorios
+# Estructura del proyecto
 
+Variación de MVC(Modelo-VIsta-Controlador) que incluye capas de servicio en lugar de vistas, centrando la arquitectura en un controlador, servicio y repositorio.
+
+```
 src/main/java/com/example/rpgapp/
     ├── controller
     │   └── CharacterController.java
@@ -24,6 +27,7 @@ src/main/java/com/example/rpgapp/
     ├── enum
     │   └── Status.java
     │   └── Priority.java
+```
 
 - **Controller:** Maneja las solicitudes HTTP y delega la lógica de negocio al servicio.
 - **Service:** Contiene la lógica de negocio.
@@ -33,9 +37,6 @@ src/main/java/com/example/rpgapp/
 - **Enum:** Define constantes para el estado y la prioridad de las tareas.
 
 
-## Arquitectura del proyecto
-
-Es una variación de MVC que incluye capas de servicio (solo que al ser una API, no tiene vistas). EN su lugar, ofrece una separación entre controlador, servicio y repositorio. 
 
 
 ### 1. Controller
