@@ -1,9 +1,6 @@
 package com.unir.roleapp.dto;
-import com.unir.roleapp.entity.*;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
-import com.unir.roleapp.enumm.Range;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +18,7 @@ public class CharacterResponseDTO {
     private String description;
     private Race race;
     private Gender gender;
-    private Range size;
+    private int size;
     private int age;
     private int gold;
     private int strength;

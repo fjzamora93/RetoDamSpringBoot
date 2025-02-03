@@ -3,6 +3,7 @@ package com.unir.roleapp.service;
 import com.unir.roleapp.dto.*;
 import com.unir.roleapp.entity.*;
 import com.unir.roleapp.repository.CharacterRepository;
+import com.unir.roleapp.mapper.EntityToDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class CharacterService {
     @Autowired private CharacterRepository characterRepository;
+    @Autowired private EntityToDtoMapper entityToDtoMapper;
 
 //    @Autowired private RoleClassRepository roleClassRepository;
 //    @Autowired private SpellRepository spellRepository;
@@ -23,14 +25,14 @@ public class CharacterService {
     public List<CharacterResponseDTO> getAllCharacters() {
         List<CharacterEntity> characters = characterRepository.findAll();
         return characters.stream()
-                .map(this::mapToCharacterResponseDTO)
+                .map(entityToDtoMapper::mapToCharacterResponseDTO)
                 .collect(Collectors.toList());
     }
 
     // Obtener un personaje por su ID
     public Optional<CharacterResponseDTO> getCharacterById(Long id) {
         Optional<CharacterEntity> characterEntity = characterRepository.findById(id);
-        return characterEntity.map(this::mapToCharacterResponseDTO);
+        return characterEntity.map(entityToDtoMapper::mapToCharacterResponseDTO);
     }
 
 

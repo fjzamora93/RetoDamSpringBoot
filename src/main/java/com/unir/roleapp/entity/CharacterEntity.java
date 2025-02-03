@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
-import com.unir.roleapp.enumm.Range;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "character")
+@Table(name = "character_entity")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -25,9 +24,14 @@ public class CharacterEntity {
 
     @Column(name = "name")  private String name;
     @Column(name = "description")  private String description;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "race") private Race race;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender") private Gender gender;
-    @Column(name = "size") private Range size;
+
+    @Column(name = "size") private int size;
     @Column(name = "age") private int age;
     @Column(name = "gold") private int gold;
     @Column(name = "strength") private int strength;

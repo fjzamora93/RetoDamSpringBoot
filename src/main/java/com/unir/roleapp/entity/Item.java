@@ -24,6 +24,8 @@ public class Item {
     @Column(name = "description") private String description;
     @Column(name = "img_url") private String imgUrl;
     @Column(name = "gold_value") private int goldValue;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "category") private ItemCategory category;
     @Column(name = "dice") private int dice;
 

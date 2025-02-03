@@ -1,8 +1,6 @@
 package com.unir.roleapp.dto;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
-import com.unir.roleapp.enumm.Range;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,7 @@ public class CharacterRequestDTO {
     private String description;
     private Race race;
     private Gender gender;
-    private Range size;
+    private int size;
     private int age;
     private int gold;
     private int strength;
@@ -39,7 +37,7 @@ public class CharacterRequestDTO {
     private Long roleClassId;
 
     public CharacterRequestDTO(
-            String name, String description, Race race, Gender gender, Range size, int age, int gold,
+            String name, String description, Race race, Gender gender, int size, int age, int gold,
             int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
             String imgUrl, Long userId, List<Long> itemIds,  List<Long> skillIds, Long roleClassId)
     {
