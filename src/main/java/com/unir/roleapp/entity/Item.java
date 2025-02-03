@@ -27,10 +27,11 @@ public class Item {
     @Column(name = "category") private ItemCategory category;
     @Column(name = "dice") private int dice;
 
-    @ManyToMany(
-            mappedBy = "items",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    private List<CharacterEntity> characterEntities;
+    // NO NOS INTERESA SABER CUÁNTOS PERSONAJES TIENEN CADA OBJETO
+//    @ManyToMany(
+//            mappedBy = "items",
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER
+//    )
+//    private List<CharacterEntity> characterEntities;
 }

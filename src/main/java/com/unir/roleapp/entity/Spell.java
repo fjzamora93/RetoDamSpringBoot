@@ -28,14 +28,7 @@ public class Spell {
     @Column(name = "img_url") private String imgUrl;
 
 
-    @ManyToMany(
-            mappedBy = "spells",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    private List<CharacterEntity> characterEntities;
-
-
+    // BIDIRECCIONAL
     @ManyToMany( cascade= CascadeType.ALL, fetch = FetchType.EAGER )
     @JoinTable(
             name = "spell_role_class",

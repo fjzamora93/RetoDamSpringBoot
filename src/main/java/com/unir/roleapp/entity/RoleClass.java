@@ -30,6 +30,6 @@ public class RoleClass {
     private List<Spell> spells;
 
 
-    @OneToOne(mappedBy = "roleClass")
-    private CharacterEntity characterEntity;
+//    @OneToOne(mappedBy = "roleClass")
+//    private CharacterEntity characterEntity;
 }

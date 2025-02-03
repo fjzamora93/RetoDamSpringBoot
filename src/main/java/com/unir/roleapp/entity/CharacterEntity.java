@@ -39,11 +39,17 @@ public class CharacterEntity {
     @Column(name = "img_url") private String imgUrl;
 
 
-    // ESTABLECEMOS LAS RELACIONES
+    // RELACION BIDIRECCIONAL
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
 
+
+    @OneToOne( cascade = CascadeType.ALL )
+    @JoinColumn(name = "id_roleclass")
+    private RoleClass roleClass;
+
+    //UNIDIRECCIONAL
     @ManyToMany( cascade= CascadeType.ALL, fetch = FetchType.EAGER )
     @JoinTable(
             name = "character_item",
@@ -53,15 +59,7 @@ public class CharacterEntity {
     private List<Item> items = new ArrayList<>();
 
 
-
-    @ManyToMany( cascade= CascadeType.ALL, fetch = FetchType.EAGER )
-    @JoinTable(
-            name = "character_spell",
-            joinColumns = @JoinColumn( name = "id_character" ),
-            inverseJoinColumns = @JoinColumn( name = "id_spell" )
-    )
-    private List<Spell> spells = new ArrayList<>();
-
+    // UNIDIRECCIONAL
     @ManyToMany( cascade= CascadeType.ALL, fetch = FetchType.EAGER )
     @JoinTable(
             name = "character_skill",
@@ -69,9 +67,4 @@ public class CharacterEntity {
             inverseJoinColumns = @JoinColumn( name = "id_skill" )
     )
     private List<Skill> skills = new ArrayList<>();
-
-    @OneToOne( cascade = CascadeType.ALL )
-    @JoinColumn(name = "id_roleclass")
-    private RoleClass roleClass;
-
 }

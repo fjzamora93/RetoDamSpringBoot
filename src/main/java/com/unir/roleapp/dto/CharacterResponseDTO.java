@@ -31,34 +31,10 @@ public class CharacterResponseDTO {
     private int wisdom;
     private int charisma;
     private String imgUrl;
-    private Long userId;
 
-    // En lugar de solo IDs, podrías devolver objetos con más detalles si es necesario
-    private RoleClass roleClass;
-    private List<Spell> spells;
-    private List<Item> items;
-    private List<Skill> skills;
-
-    public CharacterResponseDTO(CharacterEntity character) {
-        this.id = character.getId();
-        this.name = character.getName();
-        this.description = character.getDescription();
-        this.race = character.getRace();
-        this.gender = character.getGender();
-        this.size = character.getSize();
-        this.age = character.getAge();
-        this.gold = character.getGold();
-        this.strength = character.getStrength();
-        this.dexterity = character.getDexterity();
-        this.constitution = character.getConstitution();
-        this.intelligence = character.getIntelligence();
-        this.wisdom = character.getWisdom();
-        this.charisma = character.getCharisma();
-        this.imgUrl = character.getImgUrl();
-        this.userId = character.getUser().getId();
-        this.roleClass = character.getRoleClass();
-        this.spells = character.getSpells();
-        this.items = character.getItems();
-        this.skills = character.getSkills();
-    }
+    // En lugar de solo IDs, podrías devolver objetos con más detalles si es necesario (FUERTE ACOPLAMIENTO, ESTÁS LLEVANDO LA ENTITY ENTERA Y NO UN DTO)
+    private Long userId;   // TOMAMOS SOLAMENTE LA ID, NO EL USER COMPLETO
+    private RoleClassDTO roleClass;
+    private List<ItemDTO> items;
+    private List<SkillDTO> skills;
 }

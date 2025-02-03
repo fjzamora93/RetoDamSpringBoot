@@ -23,10 +23,11 @@ public class Skill {
     @Column(name = "name") private String name;
     @Column(name = "description") private String description;
 
-    @ManyToMany(
-            mappedBy = "skills",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    private List<CharacterEntity> characterEntities;
+//    UNIDIRECCIONAL
+//    @ManyToMany(
+//            mappedBy = "skills",
+//            cascade = CascadeType.ALL,
+//            fetch = FetchType.EAGER
+//    )
+//    private List<CharacterEntity> characterEntities;
 }
