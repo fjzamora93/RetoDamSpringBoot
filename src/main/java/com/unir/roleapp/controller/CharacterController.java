@@ -1,16 +1,15 @@
 package com.unir.roleapp.controller;
 
 
+import com.unir.roleapp.dto.CharacterRequestDTO;
 import com.unir.roleapp.dto.CharacterResponseDTO;
 import com.unir.roleapp.entity.CharacterEntity;
 import com.unir.roleapp.service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,4 +35,16 @@ public class CharacterController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Endpoint para crear un nuevo personaje
+    @PostMapping
+    public ResponseEntity<CharacterResponseDTO> postCharacter(@RequestBody CharacterRequestDTO character) {
+        CharacterResponseDTO createdCharacter = characterService.saveOrUpdateCharacter(character);
+
+        // Devolver la respuesta con el código de estado 201 (Creado)
+        return ResponseEntity
+                .created(URI.create("/api/characters/" + createdCharacter.getId()))
+                .body(createdCharacter);
+    }
+
 }
