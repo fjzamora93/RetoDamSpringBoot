@@ -2,6 +2,8 @@ package com.unir.roleapp.mapper;
 
 import com.unir.roleapp.dto.*;
 import com.unir.roleapp.entity.*;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -18,24 +20,11 @@ import java.util.stream.Collectors;
  * */
 @Component
 public class EntityToDtoMapper {
+    @Autowired private ModelMapper modelMapper;
 
     public CharacterResponseDTO mapToCharacterResponseDTO(CharacterEntity characterEntity) {
-        CharacterResponseDTO dto = new CharacterResponseDTO();
-        dto.setId(characterEntity.getId());
-        dto.setName(characterEntity.getName());
-        dto.setDescription(characterEntity.getDescription());
-        dto.setRace(characterEntity.getRace());
-        dto.setGender(characterEntity.getGender());
-        dto.setSize(characterEntity.getSize());
-        dto.setAge(characterEntity.getAge());
-        dto.setGold(characterEntity.getGold());
-        dto.setStrength(characterEntity.getStrength());
-        dto.setDexterity(characterEntity.getDexterity());
-        dto.setConstitution(characterEntity.getConstitution());
-        dto.setIntelligence(characterEntity.getIntelligence());
-        dto.setWisdom(characterEntity.getWisdom());
-        dto.setCharisma(characterEntity.getCharisma());
-        dto.setImgUrl(characterEntity.getImgUrl());
+        CharacterResponseDTO dto = modelMapper.map(characterEntity, CharacterResponseDTO.class);
+
         dto.setUserId(characterEntity.getUser().getId());
         dto.setRoleClass(mapRoleClassToDTO(characterEntity.getRoleClass()));
         dto.setItems(characterEntity.getItems().stream()

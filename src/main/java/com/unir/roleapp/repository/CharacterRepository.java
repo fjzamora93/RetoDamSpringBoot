@@ -1,7 +1,10 @@
 package com.unir.roleapp.repository;
 
 import com.unir.roleapp.entity.CharacterEntity;
+import com.unir.roleapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,6 +22,11 @@ import java.util.Optional;
 
 
 public interface CharacterRepository extends JpaRepository<CharacterEntity, Long> {
+
+    // BÚSQUEDA PERSONALIZADA QUE DEUVVLEVE UNA LISTA
+    List<CharacterEntity> findByUser(User user);
+
+    // BÚSQUEDA PERSONALIZADA QUE DEVUELVE UN RESUTLADO
     Optional<CharacterEntity> findByName(String name);
 }
 

@@ -25,6 +25,13 @@ public class CharacterController {
         return characterService.getAllCharacters();
     }
 
+    // Ahora llega el momento de la verdad... tocaría usar Long userId como Param para obtener resultados, no?
+    @GetMapping("/user/{userId}")
+    public List<CharacterResponseDTO> getCharactersByUser(@PathVariable Long userId) {
+        return characterService.getCharactersByUser(userId);
+    }
+
+
     // Endpoint para obtener un personaje por su ID
     @GetMapping("/{id}")
     public ResponseEntity<CharacterResponseDTO> getCharacterById(@PathVariable Long id) {
@@ -46,5 +53,13 @@ public class CharacterController {
                 .created(URI.create("/api/characters/" + createdCharacter.getId()))
                 .body(createdCharacter);
     }
+
+    // Endpoint para eliminar un personaje por ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCharacter(@PathVariable Long id) {
+        characterService.deleteCharacter(id);
+        return ResponseEntity.noContent().build();  // Responde con 204 No Content si la eliminación fue exitosa
+    }
+
 
 }
