@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -59,5 +60,13 @@ public class EntityToDtoMapper {
     public SpellDTO mapSpellToDTO(Spell spell) {
         return new SpellDTO(spell.getId(), spell.getName(), spell.getDescription(),
                 spell.getDice(), spell.getLevel(), spell.getCost(), spell.getImgUrl());
+    }
+
+
+    public SpellDTO mapSpellWithClassToDTO(Spell spell, List<String> className) {
+        return new SpellDTO(spell.getId(), spell.getName(), spell.getDescription(),
+                spell.getDice(), spell.getLevel(), spell.getCost(), spell.getImgUrl(),
+                className
+        );
     }
 }

@@ -27,7 +27,7 @@ public class SpellController {
     }
 
     /** FILTRAR EN FUNCIÓN DEL NIVEL Y CLASE DEL PERSONAJE */
-    @GetMapping("/costum-query")
+    @GetMapping("/filter")
     public List<SpellDTO> getSpellsByLevelAndRoleClass(
             @RequestParam int level,
             @RequestParam String roleClass

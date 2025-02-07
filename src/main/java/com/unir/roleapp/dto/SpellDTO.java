@@ -30,10 +30,12 @@ public class SpellDTO {
     private int cost;
     private String imgUrl;
 
-    private List<RoleClassDTO> roleClasses;
+    private List<String> roleClassesNames;
 
     // Generamos un constructor adicional pero sin la lista de Rol
-    public SpellDTO(Long id, String name, String description, int dice, int level, int cost, String imgUrl) {
+    public SpellDTO(Long id, String name, String description,
+                    int dice, int level, int cost, String imgUrl
+    ) {
         this.id = id;
         this.name = name;
         this.description = description;
