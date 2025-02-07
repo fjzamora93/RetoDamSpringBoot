@@ -56,7 +56,7 @@ public class EntityToDtoMapper {
         return new SkillDTO(skill.getId(), skill.getName(), skill.getDescription());
     }
 
-    private SpellDTO mapSpellToDTO(Spell spell) {
+    public SpellDTO mapSpellToDTO(Spell spell) {
         return new SpellDTO(spell.getId(), spell.getName(), spell.getDescription(),
                 spell.getDice(), spell.getLevel(), spell.getCost(), spell.getImgUrl());
     }

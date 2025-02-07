@@ -13,9 +13,9 @@ public interface SpellRepository extends JpaRepository<Spell, Long> {
 
     @Query("SELECT s FROM Spell s " +
             "JOIN s.roleClasses rc " +
-            "WHERE s.level <= :level AND rc.name IN :roleClasses")
+            "WHERE s.level <= :level AND rc.name IN :roleClass")
     List<Spell> findSpellsByLevelAndRoleClass(
             @Param("level") int level,
-            @Param("roleClasses") List<String> roleClasses
+            @Param("roleClass") String roleClass
     );
 }
