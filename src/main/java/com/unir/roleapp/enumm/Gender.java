@@ -1,5 +1,5 @@
 package com.unir.roleapp.enumm;
 
 public enum Gender {
-    MALE, FEMALE, NEUTRAL, Masculino, Femenino
+    MALE, FEMALE, NEUTRAL,
 }

@@ -1,5 +1,6 @@
 package com.unir.roleapp.dto;
 import com.unir.roleapp.enumm.ItemCategory;
+import com.unir.roleapp.enumm.StatType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,9 @@ public class ItemDTO {
     private int goldValue;
     private ItemCategory category;
     private int dice;
+    
+    private StatType statType;
+    private int statValue;
+
+
 }

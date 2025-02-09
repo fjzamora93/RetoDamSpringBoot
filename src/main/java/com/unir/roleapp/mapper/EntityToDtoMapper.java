@@ -49,8 +49,11 @@ public class EntityToDtoMapper {
     }
 
     private ItemDTO mapItemToDTO(Item item) {
-        return new ItemDTO(item.getId(), item.getName(), item.getDescription(),
-                item.getImgUrl(), item.getGoldValue(), item.getCategory(), item.getDice());
+        return new ItemDTO(
+                item.getId(), item.getName(), item.getDescription(),
+                item.getImgUrl(), item.getGoldValue(), item.getCategory(), item.getDice(),
+                item.getStatType(), item.getStatValue()
+        );
     }
 
     private SkillDTO mapSkillToDTO(Skill skill) {
