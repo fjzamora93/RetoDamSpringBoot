@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    @Query("SELECT i FROM Item i WHERE i.name ILIKE %:name%")
+    @Query("SELECT i FROM Item i WHERE LOWER(i.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Item> findByName(@Param("name") String name);
 
 
@@ -20,11 +20,13 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             @Param("goldValue") int goldValue
     );
 
+
     /** MÉTODO PERSONALIZADO PARA FILTROS OPCIONALES */
     @Query("SELECT i FROM Item i " +
-            "WHERE (:name IS NULL OR i.name = :name) " +
+            "WHERE (:name IS NULL OR LOWER(i.name) LIKE LOWER(CONCAT('%', :name, '%'))) " +
             "AND (:category IS NULL OR i.category = :category) " +
             "AND (:goldValue IS NULL OR i.goldValue <= :goldValue)")
+
     List<Item> findFilteredItems(
             @Param("name") String name,
             @Param("category") ItemCategory category,

@@ -31,14 +31,7 @@ public class Item {
     @Column(name = "dice") private int dice;
 
     @Enumerated(EnumType.STRING)
-    @Column(name= "stat_type") private StatType statType;
+    @Column(name= "modifiedstat") private StatType statType;
+    @Column(name= "statvalue") private int statValue;
 
-    @Column(name= "stat_value") private int statValue;
-    // NO NOS INTERESA SABER CUÁNTOS PERSONAJES TIENEN CADA OBJETO
-//    @ManyToMany(
-//            mappedBy = "items",
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.EAGER
-//    )
-//    private List<CharacterEntity> characterEntities;
 }

@@ -1,11 +1,13 @@
 package com.unir.roleapp.controller;
 
 import com.unir.roleapp.dto.ItemDTO;
+import com.unir.roleapp.entity.CharacterEntity;
 import com.unir.roleapp.entity.Item;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.repository.ItemRepository;
 import com.unir.roleapp.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class ItemController {
     /** OBTENER TODOS LOS OBJETOS */
     @GetMapping
     public List<ItemDTO> getAllItems() {
+        System.out.print("Por lo menos llega la petción.......");
         return itemService.getAllItems();
     }
 
@@ -43,15 +46,41 @@ public class ItemController {
         return itemService.getItemsByGoldValue(goldValue);
     }
 
-    /** FILTROS COMBINADOS (OPCIONALES) */
-//    @GetMapping("/filter")
-//    public List<ItemDTO> getFilteredItems(
-//            @RequestParam(required = false) String name,
-//            @RequestParam(required = false) String category,
-//            @RequestParam(required = false) Integer goldValue) {
-//
-//        ItemCategory itemCategory = (category != null) ? ItemCategory.valueOf(category.toUpperCase()) : null;
-//        return itemService.getFilteredItems(name, itemCategory, goldValue);
-//    }
+    /** FILTROS COMBINADOS (OPCIONALES) Ejemplo:
+     *
+     * FIltrar por los tres campos:
+     * http://localhost:8080/api/items/filter?name=Arco&category=WEAPON&goldValue=1000
+     *
+     * //MOstrar solo las armas que valen menos de 1000
+     * http://localhost:8080/api/items/filter?&category=WEAPON&goldValue=1000
+     * */
+    @GetMapping("/filter")
+    public List<ItemDTO> getFilteredItems(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) Integer goldValue) {
+
+        ItemCategory itemCategory = (category != null) ? ItemCategory.valueOf(category.toUpperCase()) : null;
+        return itemService.getFilteredItems(name, itemCategory, goldValue);
+    }
+
+    /** Añadir Item a Character */
+    @PostMapping("/item")
+    public ResponseEntity<CharacterEntity> addItemToCharacter(
+            @RequestParam Long characterId,
+            @RequestParam Long itemId) {
+        CharacterEntity updatedCharacter = itemService.addItemToCharacter(characterId, itemId);
+        return ResponseEntity.ok(updatedCharacter);
+    }
+
+    /** Eliminar Item de Character */
+    @DeleteMapping("/item")
+    public ResponseEntity<CharacterEntity> deleteItemFromCharacter(
+            @RequestParam Long characterId,
+            @RequestParam Long itemId) {
+        CharacterEntity updatedCharacter = itemService.deleteItemFromCharacter(characterId, itemId);
+        return ResponseEntity.ok(updatedCharacter);
+    }
+
 }
 
