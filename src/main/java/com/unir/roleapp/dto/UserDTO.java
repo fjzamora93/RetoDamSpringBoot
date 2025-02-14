@@ -16,9 +16,19 @@ import java.util.List;
 public class UserDTO {
 
     private Long id;
-    private String nombreUsuario;
-    private String contraseña;
+    private String name;
+    private String email;
+    private String password;
 
     // Relación con CharacterEntity (se pasa la lista de characterEntities)
     private List<CharacterResponseDTO> characterEntities;
+
+    // Constructor sin ID
+    public UserDTO(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+
 }

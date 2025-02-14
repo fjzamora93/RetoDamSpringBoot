@@ -23,10 +23,13 @@ public class User {
     private Long id;
 
     @Column(name = "name")
-    private String nombreUsuario;
+    private String name;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "password")
-    private String contraseña;
+    private String password;
 
     @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
     private List<CharacterEntity> characterEntities;
