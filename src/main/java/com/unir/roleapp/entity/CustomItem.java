@@ -7,15 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
-@Table(name = "item")
+@Table(name = "custom_item")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+public class CustomItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,5 +31,11 @@ public class Item {
     @Enumerated(EnumType.STRING)
     @Column(name= "modifiedstat") private StatType statType;
     @Column(name= "statvalue") private int statValue;
+
+    @Column(name= "quantity") private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "id_game_sesion")
+    private GameSession gameSession;
 
 }

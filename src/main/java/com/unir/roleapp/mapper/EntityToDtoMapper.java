@@ -28,7 +28,7 @@ public class EntityToDtoMapper {
 
         dto.setUserId(characterEntity.getUser().getId());
         dto.setRoleClass(mapRoleClassToDTO(characterEntity.getRoleClass()));
-        dto.setItems(characterEntity.getItems().stream()
+        dto.setItems(characterEntity.getCustomItems().stream()
                 .map(this::mapItemToDTO)
                 .collect(Collectors.toList()));
         dto.setSkills(characterEntity.getSkills().stream()
@@ -48,11 +48,11 @@ public class EntityToDtoMapper {
         return dto;
     }
 
-    private ItemDTO mapItemToDTO(Item item) {
+    private ItemDTO mapItemToDTO(CustomItem customItem) {
         return new ItemDTO(
-                item.getId(), item.getName(), item.getDescription(),
-                item.getImgUrl(), item.getGoldValue(), item.getCategory(), item.getDice(),
-                item.getStatType(), item.getStatValue()
+                customItem.getId(), customItem.getName(), customItem.getDescription(),
+                customItem.getImgUrl(), customItem.getGoldValue(), customItem.getCategory(), customItem.getDice(),
+                customItem.getStatType(), customItem.getStatValue()
         );
     }
 

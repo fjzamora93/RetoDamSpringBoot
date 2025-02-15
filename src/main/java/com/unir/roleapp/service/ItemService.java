@@ -2,7 +2,7 @@ package com.unir.roleapp.service;
 
 import com.unir.roleapp.dto.ItemDTO;
 import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.Item;
+import com.unir.roleapp.entity.CustomItem;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
 import com.unir.roleapp.repository.CharacterRepository;
@@ -24,25 +24,25 @@ public class ItemService {
 
     /**TODOS LOS OBJETOS*/
     public List<ItemDTO> getAllItems(){
-        List<Item> items = itemRepository.findAll();
+        List<CustomItem> customItems = itemRepository.findAll();
 
-        return items.stream()
+        return customItems.stream()
                 .map(item -> modelMapper.map(item, ItemDTO.class))
                 .collect(Collectors.toList());
     }
 
     /** BUSCAR POR NOMBRE */
     public List<ItemDTO>  getItemsByName(String name){
-        List<Item> items = itemRepository.findByName(name);
-        return items.stream()
+        List<CustomItem> customItems = itemRepository.findByName(name);
+        return customItems.stream()
                 .map(item -> modelMapper.map(item, ItemDTO.class))
                 .collect(Collectors.toList());
     }
 
     /** BUSCAR POR CATEGORY*/
     public List<ItemDTO>  getItemsByCategory(ItemCategory category){
-        List<Item> items = itemRepository.findByCategory(category);
-        return items.stream()
+        List<CustomItem> customItems = itemRepository.findByCategory(category);
+        return customItems.stream()
                 .map(item -> modelMapper.map(item, ItemDTO.class))
                 .collect(Collectors.toList());
     }
@@ -50,8 +50,8 @@ public class ItemService {
 
     /** BUSCAR POR PRECIO (QUE VALGA MENOS QUE EL INT QUE SE LE PASE COMO PARÁMETRO*/
     public List<ItemDTO>  getItemsByGoldValue(int value){
-        List<Item> items = itemRepository.findByGoldValueLessThanEqual(value);
-        return items.stream()
+        List<CustomItem> customItems = itemRepository.findByGoldValueLessThanEqual(value);
+        return customItems.stream()
                 .map(item -> modelMapper.map(item, ItemDTO.class))
                 .collect(Collectors.toList());
     }
@@ -63,8 +63,8 @@ public class ItemService {
             ItemCategory category,
             int goldValue
     ){
-        List <Item> items = itemRepository.findFilteredItems(name, category, goldValue);
-        return items.stream()
+        List <CustomItem> customItems = itemRepository.findFilteredItems(name, category, goldValue);
+        return customItems.stream()
                 .map(item -> modelMapper.map(item, ItemDTO.class))
                 .collect(Collectors.toList());
     }
@@ -74,11 +74,11 @@ public class ItemService {
         CharacterEntity character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
 
-        Item item = itemRepository.findById(itemId)
+        CustomItem customItem = itemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found"));
 
         // Agregar el item al personaje
-        character.getItems().add(item);
+        character.getCustomItems().add(customItem);
 
         // Guardar el personaje con el ítem añadido
         return characterRepository.save(character);
@@ -89,11 +89,11 @@ public class ItemService {
         CharacterEntity character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
 
-        Item item = itemRepository.findById(itemId)
+        CustomItem customItem = itemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found"));
 
         // Eliminar el item del personaje
-        character.getItems().remove(item);
+        character.getCustomItems().remove(customItem);
 
         // Guardar el personaje con el ítem eliminado
         return characterRepository.save(character);

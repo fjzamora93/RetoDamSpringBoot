@@ -33,4 +33,8 @@ public class User {
 
     @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
     private List<CharacterEntity> characterEntities;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private GameSession gameSession;
+
 }

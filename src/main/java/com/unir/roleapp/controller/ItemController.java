@@ -2,16 +2,12 @@ package com.unir.roleapp.controller;
 
 import com.unir.roleapp.dto.ItemDTO;
 import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.Item;
 import com.unir.roleapp.enumm.ItemCategory;
-import com.unir.roleapp.repository.ItemRepository;
 import com.unir.roleapp.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 @RestController
 @RequestMapping("/api/items")

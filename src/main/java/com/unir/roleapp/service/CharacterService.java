@@ -82,8 +82,8 @@ public class CharacterService {
 
         // Buscar los ítems por ID
         if (characterDto.getItemIds() != null) {
-            List<Item> items = itemRepository.findAllById(characterDto.getItemIds());
-            characterEntity.setItems(items);
+            List<CustomItem> customItems = itemRepository.findAllById(characterDto.getItemIds());
+            characterEntity.setCustomItems(customItems);
         }
 
         CharacterEntity savedCharacter = characterRepository.save(characterEntity);

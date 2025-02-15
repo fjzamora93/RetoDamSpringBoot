@@ -60,7 +60,7 @@ public class CharacterEntity {
             joinColumns = @JoinColumn( name = "id_character" ),
             inverseJoinColumns = @JoinColumn( name = "id_item" )
     )
-    private List<Item> items = new ArrayList<>();
+    private List<CustomItem> customItems = new ArrayList<>();
 
 
     // UNIDIRECCIONAL
@@ -71,4 +71,9 @@ public class CharacterEntity {
             inverseJoinColumns = @JoinColumn( name = "id_skill" )
     )
     private List<Skill> skills = new ArrayList<>();
+
+
+    @ManyToOne
+    @JoinColumn(name = "id_game_sesion")
+    private GameSession gameSession;
 }
