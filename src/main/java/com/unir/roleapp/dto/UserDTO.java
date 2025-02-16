@@ -22,6 +22,7 @@ public class UserDTO {
 
     // Relación con CharacterEntity (se pasa la lista de characterEntities)
     private List<CharacterResponseDTO> characterEntities;
+    private List<GameSessionDTO> gameSessions;
 
     // Constructor sin ID
     public UserDTO(String name, String email, String password) {

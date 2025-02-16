@@ -1,18 +1,17 @@
 package com.unir.roleapp.dto;
+import com.unir.roleapp.entity.GameSession;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.enumm.StatType;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemDTO {
+public class CustomItemDTO {
     private Long id;
     private String name;
     private String description;
@@ -24,5 +23,7 @@ public class ItemDTO {
     private StatType statType;
     private int statValue;
 
+//    RELACIÓN UNIDIRECCIONAL, NO HACE FALTA INDICAR LA SESSIÓN A LA QUE PERTENECE
+//    private GameSession gameSession;
 
 }

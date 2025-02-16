@@ -1,6 +1,6 @@
 package com.unir.roleapp.controller;
 
-import com.unir.roleapp.dto.ItemDTO;
+import com.unir.roleapp.dto.CustomItemDTO;
 import com.unir.roleapp.entity.CharacterEntity;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.service.ItemService;
@@ -18,27 +18,27 @@ public class ItemController {
 
     /** OBTENER TODOS LOS OBJETOS */
     @GetMapping
-    public List<ItemDTO> getAllItems() {
+    public List<CustomItemDTO> getAllItems() {
         System.out.print("Por lo menos llega la petción.......");
         return itemService.getAllItems();
     }
 
     /** BUSCAR POR NOMBRE COMO PARÁMETRO EN LA URL */
     @GetMapping("/name/{name}")
-    public List<ItemDTO> getItemsByName(@PathVariable String name) {
+    public List<CustomItemDTO> getItemsByName(@PathVariable String name) {
         return itemService.getItemsByName(name);
     }
 
     /** BUSCAR POR CATEGORÍA COMO PARÁMETRO EN LA URL */
     @GetMapping("/category/{category}")
-    public List<ItemDTO> getItemsByCategory(@PathVariable String category) {
+    public List<CustomItemDTO> getItemsByCategory(@PathVariable String category) {
         ItemCategory itemCategory = ItemCategory.valueOf(category.toUpperCase());
         return itemService.getItemsByCategory(itemCategory);
     }
 
     /** BUSCAR POR PRECIO MENOR O IGUAL A UN VALOR */
     @GetMapping("/goldvalue/{goldValue}")
-    public List<ItemDTO> getItemsByGoldValue(@PathVariable int goldValue) {
+    public List<CustomItemDTO> getItemsByGoldValue(@PathVariable int goldValue) {
         return itemService.getItemsByGoldValue(goldValue);
     }
 
@@ -51,7 +51,7 @@ public class ItemController {
      * http://localhost:8080/api/items/filter?&category=WEAPON&goldValue=1000
      * */
     @GetMapping("/filter")
-    public List<ItemDTO> getFilteredItems(
+    public List<CustomItemDTO> getFilteredItems(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) Integer goldValue) {

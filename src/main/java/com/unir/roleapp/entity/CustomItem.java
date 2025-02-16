@@ -1,4 +1,5 @@
 package com.unir.roleapp.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.enumm.StatType;
 import jakarta.persistence.*;
@@ -34,8 +35,10 @@ public class CustomItem {
 
     @Column(name= "quantity") private int quantity;
 
+    // NO PODREMOS IDENTIFICAR LA SESSIÓN DE CADA OBJETO, AUNQUE LOS OBJETOS ESTARÁN TODOS DENTRO DE LA SESIÓN
     @ManyToOne
     @JoinColumn(name = "id_game_sesion")
+    @JsonIgnore
     private GameSession gameSession;
 
 }

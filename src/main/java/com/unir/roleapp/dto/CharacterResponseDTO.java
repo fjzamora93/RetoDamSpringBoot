@@ -1,4 +1,5 @@
 package com.unir.roleapp.dto;
+import com.unir.roleapp.entity.GameSession;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
 import lombok.AllArgsConstructor;
@@ -28,10 +29,12 @@ public class CharacterResponseDTO {
     private int wisdom;
     private int charisma;
     private String imgUrl;
+    private GameSession gameSession;
 
     // En lugar de solo IDs, podrías devolver objetos con más detalles si es necesario (FUERTE ACOPLAMIENTO, ESTÁS LLEVANDO LA ENTITY ENTERA Y NO UN DTO)
     private Long userId;   // TOMAMOS SOLAMENTE LA ID, NO EL USER COMPLETO
     private RoleClassDTO roleClass;
-    private List<ItemDTO> items;
+    private List<CustomItemDTO> items;
     private List<SkillDTO> skills;
+
 }

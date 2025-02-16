@@ -1,6 +1,6 @@
 package com.unir.roleapp.service;
 
-import com.unir.roleapp.dto.ItemDTO;
+import com.unir.roleapp.dto.CustomItemDTO;
 import com.unir.roleapp.entity.CharacterEntity;
 import com.unir.roleapp.entity.CustomItem;
 import com.unir.roleapp.enumm.ItemCategory;
@@ -23,49 +23,49 @@ public class ItemService {
     @Autowired private CharacterRepository characterRepository;
 
     /**TODOS LOS OBJETOS*/
-    public List<ItemDTO> getAllItems(){
+    public List<CustomItemDTO> getAllItems(){
         List<CustomItem> customItems = itemRepository.findAll();
 
         return customItems.stream()
-                .map(item -> modelMapper.map(item, ItemDTO.class))
+                .map(item -> modelMapper.map(item, CustomItemDTO.class))
                 .collect(Collectors.toList());
     }
 
     /** BUSCAR POR NOMBRE */
-    public List<ItemDTO>  getItemsByName(String name){
+    public List<CustomItemDTO>  getItemsByName(String name){
         List<CustomItem> customItems = itemRepository.findByName(name);
         return customItems.stream()
-                .map(item -> modelMapper.map(item, ItemDTO.class))
+                .map(item -> modelMapper.map(item, CustomItemDTO.class))
                 .collect(Collectors.toList());
     }
 
     /** BUSCAR POR CATEGORY*/
-    public List<ItemDTO>  getItemsByCategory(ItemCategory category){
+    public List<CustomItemDTO>  getItemsByCategory(ItemCategory category){
         List<CustomItem> customItems = itemRepository.findByCategory(category);
         return customItems.stream()
-                .map(item -> modelMapper.map(item, ItemDTO.class))
+                .map(item -> modelMapper.map(item, CustomItemDTO.class))
                 .collect(Collectors.toList());
     }
 
 
     /** BUSCAR POR PRECIO (QUE VALGA MENOS QUE EL INT QUE SE LE PASE COMO PARÁMETRO*/
-    public List<ItemDTO>  getItemsByGoldValue(int value){
+    public List<CustomItemDTO>  getItemsByGoldValue(int value){
         List<CustomItem> customItems = itemRepository.findByGoldValueLessThanEqual(value);
         return customItems.stream()
-                .map(item -> modelMapper.map(item, ItemDTO.class))
+                .map(item -> modelMapper.map(item, CustomItemDTO.class))
                 .collect(Collectors.toList());
     }
 
 
     /** Búsqueda con filtros avanzada*/
-    public List<ItemDTO>  getFilteredItems(
+    public List<CustomItemDTO>  getFilteredItems(
             String name,
             ItemCategory category,
             int goldValue
     ){
         List <CustomItem> customItems = itemRepository.findFilteredItems(name, category, goldValue);
         return customItems.stream()
-                .map(item -> modelMapper.map(item, ItemDTO.class))
+                .map(item -> modelMapper.map(item, CustomItemDTO.class))
                 .collect(Collectors.toList());
     }
 

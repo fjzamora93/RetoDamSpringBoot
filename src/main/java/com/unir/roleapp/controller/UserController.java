@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired private UserService userService;
 
@@ -26,7 +24,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    // CREAR O ACTUALIZAR USUARIO
+    // INICIAR SESIÓN
     @GetMapping("/login")
     public ResponseEntity<?> getUserByEmailAndPassword(@RequestParam String email, @RequestParam String password) {
         UserDTO user = userService.getUserByEmail(email, password);

@@ -48,8 +48,8 @@ public class EntityToDtoMapper {
         return dto;
     }
 
-    private ItemDTO mapItemToDTO(CustomItem customItem) {
-        return new ItemDTO(
+    private CustomItemDTO mapItemToDTO(CustomItem customItem) {
+        return new CustomItemDTO(
                 customItem.getId(), customItem.getName(), customItem.getDescription(),
                 customItem.getImgUrl(), customItem.getGoldValue(), customItem.getCategory(), customItem.getDice(),
                 customItem.getStatType(), customItem.getStatValue()

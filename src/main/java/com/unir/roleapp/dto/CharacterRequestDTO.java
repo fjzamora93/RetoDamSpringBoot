@@ -1,4 +1,5 @@
 package com.unir.roleapp.dto;
+import com.unir.roleapp.entity.GameSession;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,7 @@ public class CharacterRequestDTO {
     private List<Long> itemIds;
     private List<Long> skillIds;
     private Long roleClassId;
+    private GameSession gameSession;
 
     public CharacterRequestDTO(
             String name, String description, Race race, Gender gender, int size, int age, int gold,

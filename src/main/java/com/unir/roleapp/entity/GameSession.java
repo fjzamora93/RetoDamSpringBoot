@@ -22,11 +22,11 @@ public class GameSession {
 
 
     // Cada sesión tenrá un único Usuario que será el Creador y el Game Máster
-    @OneToOne( cascade = CascadeType.ALL )
+    @ManyToOne( cascade = CascadeType.ALL )
     @JoinColumn(name = "id_user")
     private User user;
 
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany( mappedBy = "gameSession", cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
     private List<CharacterEntity>  characters;
 
     @OneToMany( mappedBy = "gameSession", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -40,8 +40,8 @@ public class UserServiceTest {
 
     @Test
     void testGetUserById() {
-        User user = new User(1L,"nombre ejemplo", "test@example.com", "password123" , new ArrayList<>());
-        UserDTO userDTO = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123", new ArrayList<>() );
+        User user = new User(1L,"nombre ejemplo", "test@example.com", "password123" , new ArrayList<>() , new ArrayList<>());
+        UserDTO userDTO = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123", new ArrayList<>(), new ArrayList<>() );
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(modelMapper.map(user, UserDTO.class)).thenReturn(userDTO);
@@ -59,8 +59,8 @@ public class UserServiceTest {
     @Test
     void testGetUserByEmailAndPassword() {
         // Creación del usuario con la contraseña en texto claro
-        User user = new User(1L, "nombre ejemplo", "test@example.com", "$2a$10$7G3GV90jA4pMOrNdzrhMpeQGvIMa/P0d4yIEfrfZEd0fdQ5zjw8ra", new ArrayList<>()); // Contraseña hasheada (esto debería ser generado)
-        UserDTO userDTO = new UserDTO(1L, "nombre ejemplo", "test@example.com", "password123", new ArrayList<>());
+        User user = new User(1L, "nombre ejemplo", "test@example.com", "$2a$10$7G3GV90jA4pMOrNdzrhMpeQGvIMa/P0d4yIEfrfZEd0fdQ5zjw8ra", new ArrayList<>(), new ArrayList<>()); // Contraseña hasheada (esto debería ser generado)
+        UserDTO userDTO = new UserDTO(1L, "nombre ejemplo", "test@example.com", "password123", new ArrayList<>(), new ArrayList<>());
 
         // Simulación de la búsqueda por email
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(user));
@@ -94,9 +94,9 @@ public class UserServiceTest {
     @Test
     void testSaveOrUpdate_NewUser() {
         UserDTO userDTO = new UserDTO(null, "new@example.com", "password123");
-        User user = new User(null, "nombre", "new@example.com", "password123", new ArrayList<>());
-        User savedUser = new User(2L, "nombre", "new@example.com", "password123", new ArrayList<>());
-        UserDTO savedUserDTO = new UserDTO(2L, "nombre", "new@example.com", "password123",new ArrayList<>() );
+        User user = new User(null, "nombre", "new@example.com", "password123", new ArrayList<>(), new ArrayList<>());
+        User savedUser = new User(2L, "nombre", "new@example.com", "password123", new ArrayList<>(), new ArrayList<>());
+        UserDTO savedUserDTO = new UserDTO(2L, "nombre", "new@example.com", "password123",new ArrayList<>(), new ArrayList<>() );
 
         when(userRepository.findByEmail("new@example.com")).thenReturn(Optional.empty());
         when(modelMapper.map(userDTO, User.class)).thenReturn(user);
@@ -110,7 +110,7 @@ public class UserServiceTest {
 
     @Test
     void testSaveOrUpdate_ExistingUser() {
-        UserDTO userDTO = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123",new ArrayList<>() );
+        UserDTO userDTO = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123",new ArrayList<>(), new ArrayList<>() );
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(new User()));
 
         UserDTO result = userService.saveOrUpdate(userDTO);

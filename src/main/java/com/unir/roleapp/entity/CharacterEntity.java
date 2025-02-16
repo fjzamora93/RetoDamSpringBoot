@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
 import jakarta.persistence.*;
@@ -75,5 +76,6 @@ public class CharacterEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_game_sesion")
+    @JsonIgnore
     private GameSession gameSession;
 }

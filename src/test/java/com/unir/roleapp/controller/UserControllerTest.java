@@ -5,7 +5,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 import com.unir.roleapp.dto.CharacterResponseDTO;
+import com.unir.roleapp.dto.GameSessionDTO;
 import com.unir.roleapp.dto.UserDTO;
+import com.unir.roleapp.entity.GameSession;
 import com.unir.roleapp.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,7 @@ public class UserControllerTest {
 
     private MockMvc mockMvc;
     private final List<CharacterResponseDTO>  characterEntities = new ArrayList<>();
+    private final List<GameSessionDTO>  gameSessions = new ArrayList<>();
 
     @Mock private UserService userService;
     @InjectMocks private UserController userController;
@@ -37,7 +40,7 @@ public class UserControllerTest {
     @Test
     void testGetUserById() throws Exception {
 
-        UserDTO user = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123",characterEntities );
+        UserDTO user = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123", characterEntities, gameSessions );
         when(userService.getUserById(1L)).thenReturn(user);
 
         mockMvc.perform(get("/api/user/1"))
@@ -48,7 +51,7 @@ public class UserControllerTest {
 
     @Test
     void testGetUserByEmailAndPassword() throws Exception {
-        UserDTO user = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123",characterEntities );
+        UserDTO user = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123",characterEntities, gameSessions );
         when(userService.getUserByEmail("test@example.com", "password123")).thenReturn(user);
 
         mockMvc.perform(get("/api/user/login")
