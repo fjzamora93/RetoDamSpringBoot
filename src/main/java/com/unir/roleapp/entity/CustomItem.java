@@ -37,7 +37,7 @@ public class CustomItem {
 
     // NO PODREMOS IDENTIFICAR LA SESSIÓN DE CADA OBJETO, AUNQUE LOS OBJETOS ESTARÁN TODOS DENTRO DE LA SESIÓN
     @ManyToOne
-    @JoinColumn(name = "id_game_sesion")
+    @JoinColumn(name = "id_game_session")
     @JsonIgnore
     private GameSession gameSession;
 

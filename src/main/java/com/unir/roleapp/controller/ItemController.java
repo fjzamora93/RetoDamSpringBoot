@@ -64,7 +64,8 @@ public class ItemController {
     @PostMapping("/item")
     public ResponseEntity<CharacterEntity> addItemToCharacter(
             @RequestParam Long characterId,
-            @RequestParam Long itemId) {
+            @RequestParam Long itemId
+    ) {
         CharacterEntity updatedCharacter = itemService.addItemToCharacter(characterId, itemId);
         return ResponseEntity.ok(updatedCharacter);
     }

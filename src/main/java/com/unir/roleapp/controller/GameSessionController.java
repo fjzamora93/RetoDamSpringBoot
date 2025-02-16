@@ -1,6 +1,9 @@
 package com.unir.roleapp.controller;
+import com.unir.roleapp.dto.CharacterResponseDTO;
+import com.unir.roleapp.dto.CustomItemDTO;
 import com.unir.roleapp.dto.GameSessionDTO;
 import com.unir.roleapp.dto.UserDTO;
+import com.unir.roleapp.entity.GameSession;
 import com.unir.roleapp.entity.User;
 import com.unir.roleapp.error.ErrorResponse;
 import com.unir.roleapp.repository.UserRepository;
@@ -9,6 +12,7 @@ import com.unir.roleapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,26 +22,55 @@ public class GameSessionController {
     @Autowired
     private GameSessionService gameSessionService;
 
-    // CREAR UNA NUEVA SESION
-    @PostMapping({"/id"})
-    public GameSessionDTO createGameSession(@RequestBody GameSessionDTO gameSessionDTO) {
-        return gameSessionService.createGameSession(gameSessionDTO);
-    }
 
     // BUSCAR SESIÓN POR ID
-    @GetMapping({"/id"})
-    public GameSessionDTO getGameSessionById(@RequestParam("id") Long id) {
-        return gameSessionService.findById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<GameSessionDTO> getGameSessionById(
+            @PathVariable Long id
+    ) {
+        GameSessionDTO gameSession = gameSessionService.findById(id);
+        return ResponseEntity.ok(gameSession);
     }
 
-    @DeleteMapping({"/id"})
-    public ResponseEntity deleteGameSessionById(@RequestParam("id") Long id) {
-        if (gameSessionService.removeGameSession(id)) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    // CREAR UNA NUEVA SESION
+    @Transactional
+    @PostMapping("/create")
+    public ResponseEntity<GameSessionDTO> createGameSession(
+            @RequestBody GameSessionDTO gameSessionDTO
+    ) {
+        GameSessionDTO gameSession = gameSessionService.createGameSession(gameSessionDTO);
+        return ResponseEntity.ok(gameSession);
     }
 
+    // ELIMINAR SESIÓN
+    @Transactional
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGameSession(
+            @PathVariable Long id
+    ) {
+        gameSessionService.deleteGameSession(id);
+        return ResponseEntity.noContent().build();
+    }
 
+    // AÑADIR PERSONAJE A LA SESIÓN
+    @Transactional
+    @PostMapping("/add-character")
+    public  ResponseEntity addCharacterToGameSession(
+            @RequestParam Long characterId,
+            @RequestParam Long gameSessionId
+    ) {
+        CharacterResponseDTO characterResponseDTO = gameSessionService.addCharacterToGameSession(characterId, gameSessionId);
+        return ResponseEntity.ok(characterResponseDTO);
+    }
+
+    // AÑADIR OBJETO A LA SESIÓN
+    @Transactional
+    @PostMapping("/add-item")
+    public ResponseEntity<CustomItemDTO> addItemToGameSession(
+            @RequestParam Long itemId,
+            @RequestParam Long gameSessionId
+    ){
+        CustomItemDTO itemDTO = gameSessionService.addItemToGameSession(itemId, gameSessionId);
+        return ResponseEntity.ok(itemDTO);
+    }
 }

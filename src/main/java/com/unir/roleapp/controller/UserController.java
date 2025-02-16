@@ -30,7 +30,7 @@ public class UserController {
         UserDTO user = userService.getUserByEmail(email, password);
 
         if (user == null) {
-            return new ResponseEntity<>(new ErrorResponse("NOT_FOUND", "Usuario no encontrado o credenciales incorrectas"), HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró la sesión o el personaje.");
         }
 
         return ResponseEntity.ok(user);

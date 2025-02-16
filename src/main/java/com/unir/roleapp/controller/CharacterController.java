@@ -25,7 +25,7 @@ public class CharacterController {
         return characterService.getAllCharacters();
     }
 
-    // Ahora llega el momento de la verdad... tocaría usar Long userId como Param para obtener resultados, no?
+
     @GetMapping("/user/{userId}")
     public List<CharacterResponseDTO> getCharactersByUser(@PathVariable Long userId) {
         return characterService.getCharactersByUser(userId);

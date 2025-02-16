@@ -1,5 +1,7 @@
 package com.unir.roleapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -15,11 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @NamedQuery( name = "Usuario.findAll", query = "FROM User" )
-@ToString
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonManagedReference
     private Long id;
 
     @Column(name = "name")
@@ -33,9 +35,6 @@ public class User {
 
     @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
     private List<CharacterEntity> characterEntities;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<GameSession> gameSessions;
 
 
 }

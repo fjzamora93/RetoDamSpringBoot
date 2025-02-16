@@ -29,7 +29,9 @@ public class CharacterResponseDTO {
     private int wisdom;
     private int charisma;
     private String imgUrl;
-    private GameSession gameSession;
+
+    // De la sesión solo devolvemos la ID
+    private Long gameSessionId;
 
     // En lugar de solo IDs, podrías devolver objetos con más detalles si es necesario (FUERTE ACOPLAMIENTO, ESTÁS LLEVANDO LA ENTITY ENTERA Y NO UN DTO)
     private Long userId;   // TOMAMOS SOLAMENTE LA ID, NO EL USER COMPLETO

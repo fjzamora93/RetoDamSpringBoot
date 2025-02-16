@@ -1,15 +1,13 @@
 package com.unir.roleapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "item")
+@Table(name = "game_session")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,8 +20,8 @@ public class GameSession {
 
 
     // Cada sesión tenrá un único Usuario que será el Creador y el Game Máster
-    @ManyToOne( cascade = CascadeType.ALL )
-    @JoinColumn(name = "id_user")
+    @ManyToOne( cascade = CascadeType.MERGE ,  fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany( mappedBy = "gameSession", cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
@@ -32,5 +30,8 @@ public class GameSession {
     @OneToMany( mappedBy = "gameSession", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CustomItem>  customItems;
 
+    public GameSession(User user) {
+        this.user = user;
+    }
 
 }

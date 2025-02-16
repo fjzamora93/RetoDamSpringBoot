@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
 import jakarta.persistence.*;
@@ -47,6 +49,7 @@ public class CharacterEntity {
     // RELACION BIDIRECCIONAL
     @ManyToOne
     @JoinColumn(name = "id_user")
+    @JsonBackReference
     private User user;
 
 
@@ -75,7 +78,7 @@ public class CharacterEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "id_game_sesion")
+    @JoinColumn(name = "id_game_session")
     @JsonIgnore
     private GameSession gameSession;
 }

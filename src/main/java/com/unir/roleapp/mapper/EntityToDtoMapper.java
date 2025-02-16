@@ -26,6 +26,7 @@ public class EntityToDtoMapper {
     public CharacterResponseDTO mapToCharacterResponseDTO(CharacterEntity characterEntity) {
         CharacterResponseDTO dto = modelMapper.map(characterEntity, CharacterResponseDTO.class);
 
+        dto.setGameSessionId(characterEntity.getGameSession().getId());
         dto.setUserId(characterEntity.getUser().getId());
         dto.setRoleClass(mapRoleClassToDTO(characterEntity.getRoleClass()));
         dto.setItems(characterEntity.getCustomItems().stream()
