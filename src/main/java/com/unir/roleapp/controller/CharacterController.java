@@ -21,34 +21,30 @@ public class CharacterController {
 
     // Endpoint para obtener todos los personajes
     @GetMapping
-    public List<CharacterResponseDTO> getAllCharacters() {
-        return characterService.getAllCharacters();
+    public ResponseEntity<List<CharacterResponseDTO>> getAllCharacters() {
+        List<CharacterResponseDTO> characterList =  characterService.getAllCharacters();
+        return ResponseEntity.ok(characterList);
     }
 
 
     @GetMapping("/user/{userId}")
-    public List<CharacterResponseDTO> getCharactersByUser(@PathVariable Long userId) {
-        return characterService.getCharactersByUser(userId);
+    public ResponseEntity<List<CharacterResponseDTO>> getCharactersByUser(@PathVariable Long userId) {
+        List<CharacterResponseDTO> characterList = characterService.getCharactersByUser(userId);
+        return ResponseEntity.ok(characterList);
     }
 
 
     // Endpoint para obtener un personaje por su ID
     @GetMapping("/{id}")
     public ResponseEntity<CharacterResponseDTO> getCharacterById(@PathVariable Long id) {
-        Optional<CharacterResponseDTO> character = characterService.getCharacterById(id);
-        if (character.isPresent()) {
-            return ResponseEntity.ok(character.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        CharacterResponseDTO character = characterService.getCharacterById(id);
+        return ResponseEntity.ok(character);
     }
 
-    // Endpoint para crear un nuevo personaje
+    // Endpoint para crear un nuevo personaje o actualizarlo
     @PostMapping
     public ResponseEntity<CharacterResponseDTO> postCharacter(@RequestBody CharacterRequestDTO character) {
         CharacterResponseDTO createdCharacter = characterService.saveOrUpdateCharacter(character);
-
-        // Devolver la respuesta con el código de estado 201 (Creado)
         return ResponseEntity
                 .created(URI.create("/api/characters/" + createdCharacter.getId()))
                 .body(createdCharacter);
@@ -58,7 +54,7 @@ public class CharacterController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCharacter(@PathVariable Long id) {
         characterService.deleteCharacter(id);
-        return ResponseEntity.noContent().build();  // Responde con 204 No Content si la eliminación fue exitosa
+        return ResponseEntity.noContent().build();
     }
 
 

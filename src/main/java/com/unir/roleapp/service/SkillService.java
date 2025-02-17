@@ -8,7 +8,9 @@ import com.unir.roleapp.repository.CharacterRepository;
 import com.unir.roleapp.repository.SkillRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,8 +34,11 @@ public class SkillService {
             Long skillId
     ) {
         CharacterEntity character = characterRepository.findById(charcterId)
-                .orElseThrow(() -> new RuntimeException("Character not found"));
-        Skill skill = skillRepository.findById(skillId).orElseThrow(() -> new RuntimeException("Skill not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "PERSONAJE NO ENCONTRADO"));
+        Skill skill = skillRepository
+                .findById(skillId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "HABILIDAD NO ENCONTRADA"));
+
 
         character.getSkills().add(skill);
         return characterRepository.save(character);
@@ -42,13 +47,12 @@ public class SkillService {
     /** Eliminar Skill de Character */
     public CharacterEntity deleteSkillFromCharacterEntity(Long characterId, Long skillId) {
         CharacterEntity character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new RuntimeException("Character not found"));
-        Skill skill = skillRepository.findById(skillId).orElseThrow(() -> new RuntimeException("Skill not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "PERSONAJE NO ENCONTRADO"));
+        Skill skill = skillRepository
+                .findById(skillId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "HABILIDAD NO ENCONTRADA"));
 
-        // Eliminar la skill del personaje
         character.getSkills().remove(skill);
-
-        // Guardar el personaje con la habilidad eliminada
         return characterRepository.save(character);
     }
 

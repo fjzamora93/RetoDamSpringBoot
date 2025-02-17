@@ -26,7 +26,7 @@ public class UserService {
     public UserDTO getUserById(Long id) {
         return userRepository.findById(id)
                 .map(user -> modelMapper.map(user, UserDTO.class))
-                .orElse(null);
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
     /** BUSCAR USARIO POR EMAIL (LA CONTRASEÑA SE COMPRUEBA EN LA API, NO EN BASE DE DATOS)
@@ -37,62 +37,57 @@ public class UserService {
      *
      * */
     public UserDTO getUserByEmail(String email, String password) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario o contraseña incorrectos"));
 
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-
-            // Comprobar si la contraseña proporcionada coincide con el hash almacenado
-            if (checkPassword(password, user.getPassword())) {
-                return modelMapper.map(user, UserDTO.class);
-            } else {
-                return null;
-            }
+        // Comprobamos que las contraseñas se corresponden
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return modelMapper.map(user, UserDTO.class);
         } else {
-            return null;
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario o contraseña incorrectos");
         }
+
     }
 
 
-    /** AÑADIR NUEVO USUARIO */
-    public UserDTO saveOrUpdate(UserDTO userDTO) {
-        Optional<User> existingUserByEmail = userRepository.findByEmail(userDTO.getEmail());
-
-        // Verificar la unicidad del email:
-        if (existingUserByEmail.isPresent()) {
-            // Si es una actualización, el ID del usuario en la BD debe coincidir con el del DTO.
-            if (userDTO.getId() == null || !existingUserByEmail.get().getId().equals(userDTO.getId())) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL EMAIL YA ESTÁ REGISTRADO");
-            }
+    public UserDTO save(UserDTO userDTO) {
+        // Verificar si el email ya está registrado
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL EMAIL YA ESTÁ REGISTRADO");
         }
 
-        // Verificar si es una actualización o creación
-        if (userDTO.getId() != null) {
-            // Es una actualización: obtener el usuario existente para comparar la contraseña
-            Optional<User> userFromDbOpt = userRepository.findById(userDTO.getId());
-            if (userFromDbOpt.isPresent()) {
-                User userFromDb = userFromDbOpt.get();
-                // Si la contraseña ingresada coincide con la que ya está en la BD,
-                // asumimos que no se modificó y mantenemos el hash.
-                if (passwordEncoder.matches(userDTO.getPassword(), userFromDb.getPassword())) {
-                    userDTO.setPassword(userFromDb.getPassword());
-                } else {
-                    // La contraseña fue modificada, así que la encriptamos.
-                    userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-                }
-            } else {
-                // Si por alguna razón no se encuentra el usuario, procedemos a encriptar la contraseña.
-                userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            }
-        } else {
-            // Para un nuevo usuario siempre encriptamos la contraseña
-            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        }
+        // Encriptar la contraseña
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-        // Convertir el DTO a entidad, guardar y luego mapear de vuelta a DTO
+        // Guardar el nuevo usuario
         User userToSave = modelMapper.map(userDTO, User.class);
         User savedUser = userRepository.save(userToSave);
         return modelMapper.map(savedUser, UserDTO.class);
+    }
+
+    public UserDTO update(UserDTO userDTO) {
+        User userFromDb = userRepository.findById(userDTO.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USUARIO NO ENCONTRADO"));
+
+        // Verificar unicidad del email solo si lo han cambiado
+        Optional<User> existingUserByEmail = userRepository.findByEmail(userDTO.getEmail());
+        if (existingUserByEmail.isPresent() &&
+        !userDTO.getEmail().equalsIgnoreCase(existingUserByEmail.get().getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EL EMAIL YA ESTÁ REGISTRADO");
+        }
+
+        // Gestionar la contraseña: mantener el hash si no ha sido modificada
+        if (!passwordEncoder.matches(userDTO.getPassword(), userFromDb.getPassword())) {
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        } else {
+            userDTO.setPassword(userFromDb.getPassword());
+        }
+
+        // Actualizar el usuario
+        User userToUpdate = modelMapper.map(userDTO, User.class);
+        User updatedUser = userRepository.save(userToUpdate);
+        return modelMapper.map(updatedUser, UserDTO.class);
     }
 
 
@@ -104,9 +99,5 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    /** CHECK PASSWORD */
-    public boolean checkPassword(String rawPassword, String storedHashedPassword) {
-        return passwordEncoder.matches(rawPassword, storedHashedPassword);
-    }
 
 }

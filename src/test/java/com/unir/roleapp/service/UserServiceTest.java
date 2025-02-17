@@ -103,7 +103,7 @@ public class UserServiceTest {
         when(userRepository.save(user)).thenReturn(savedUser);
         when(modelMapper.map(savedUser, UserDTO.class)).thenReturn(savedUserDTO);
 
-        UserDTO result = userService.saveOrUpdate(userDTO);
+        UserDTO result = userService.save(userDTO);
         assertNotNull(result);
         assertEquals("new@example.com", result.getEmail());
     }
@@ -113,7 +113,7 @@ public class UserServiceTest {
         UserDTO userDTO = new UserDTO(1L,"nombre ejemplo", "test@example.com", "password123",new ArrayList<>(), new ArrayList<>() );
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(new User()));
 
-        UserDTO result = userService.saveOrUpdate(userDTO);
+        UserDTO result = userService.save(userDTO);
         assertNull(result);
     }
 

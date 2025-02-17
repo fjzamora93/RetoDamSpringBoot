@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -24,24 +26,30 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+
     // INICIAR SESIÓN
     @GetMapping("/login")
     public ResponseEntity<?> getUserByEmailAndPassword(@RequestParam String email, @RequestParam String password) {
         UserDTO user = userService.getUserByEmail(email, password);
-
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró la sesión o el personaje.");
-        }
-
         return ResponseEntity.ok(user);
     }
 
 
     // AÑADIR UN NUEVO USUARIO
     @PostMapping("/signup")
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
+        UserDTO userDto = userService.save(userDTO);
+        return ResponseEntity
+                .created(URI.create("/api/user/" + userDto.getId()))
+                .body(userDto);
+    }
+
+    @PutMapping("/update")
     public ResponseEntity<UserDTO> postUser(@RequestBody UserDTO userDTO) {
-        UserDTO userDto = userService.saveOrUpdate(userDTO);
-        return ResponseEntity.ok(userDto);
+        UserDTO userDto = userService.update( userDTO);
+        return ResponseEntity
+                .created(URI.create("/api/user/" + userDto.getId()))
+                .body(userDto);
     }
 
     // ELIMINAR CUENTA

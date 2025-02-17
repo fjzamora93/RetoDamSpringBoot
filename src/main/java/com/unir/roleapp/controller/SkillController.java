@@ -25,7 +25,7 @@ public class SkillController {
     }
 
     /** Añadir Skill a Character */
-    @PostMapping("/skill")
+    @PostMapping()
     public ResponseEntity<CharacterEntity> addSkillToCharacter(
             @RequestParam Long characterId,
             @RequestParam Long skillId) {
@@ -34,7 +34,7 @@ public class SkillController {
     }
 
     /** Eliminar Skill de Character */
-    @DeleteMapping("/skill")
+    @DeleteMapping()
     public ResponseEntity<CharacterEntity> deleteSkillFromCharacter(
             @RequestParam Long characterId,
             @RequestParam Long skillId) {

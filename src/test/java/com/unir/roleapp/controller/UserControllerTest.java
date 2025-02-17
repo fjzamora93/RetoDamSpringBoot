@@ -77,7 +77,7 @@ public class UserControllerTest {
     @Test
     void testPostUser() throws Exception {
         UserDTO user = new UserDTO("nombre ejemplo", "test@example.com", "password123" );
-        when(userService.saveOrUpdate(any(UserDTO.class))).thenReturn(user);
+        when(userService.save(any(UserDTO.class))).thenReturn(user);
 
         mockMvc.perform(post("/api/user/signup")
                         .contentType(MediaType.APPLICATION_JSON)

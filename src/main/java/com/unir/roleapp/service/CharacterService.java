@@ -53,9 +53,11 @@ public class CharacterService {
 
 
     /** BUSCAR POR ID */
-    public Optional<CharacterResponseDTO> getCharacterById(Long id) {
-        Optional<CharacterEntity> characterEntity = characterRepository.findById(id);
-        return characterEntity.map(entityToDtoMapper::mapToCharacterResponseDTO);
+    public CharacterResponseDTO getCharacterById(Long id) {
+        return characterRepository.findById(id)
+                .map(entityToDtoMapper::mapToCharacterResponseDTO)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "CHARACTER NOT FOUND"));
+
     }
 
     /** DELETE */
