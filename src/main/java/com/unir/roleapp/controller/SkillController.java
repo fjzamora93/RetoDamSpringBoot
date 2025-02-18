@@ -20,8 +20,9 @@ public class SkillController {
     private SkillService skillService;
 
     @GetMapping
-    public List<SkillDTO> getAllSkills() {
-        return skillService.getSkills();
+    public ResponseEntity<List<SkillDTO>> getAllSkills() {
+        List<SkillDTO> skills = skillService.getSkills();
+        return ResponseEntity.ok(skills);
     }
 
     /** Añadir Skill a Character */

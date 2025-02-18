@@ -25,7 +25,9 @@ public class SkillService {
 
     public List<SkillDTO> getSkills() {
         List <Skill> skills = skillRepository.findAll();
-        return skills.stream().map(skill -> modelMapper.map(skill, SkillDTO.class)).collect(Collectors.toList());
+        return skills.stream().map(
+                skill -> modelMapper.map(skill, SkillDTO.class))
+                .collect(Collectors.toList());
     }
 
     /** Añadir SKill a Character */

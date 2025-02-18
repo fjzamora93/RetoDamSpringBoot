@@ -18,28 +18,33 @@ public class ItemController {
 
     /** OBTENER TODOS LOS OBJETOS */
     @GetMapping
-    public List<CustomItemDTO> getAllItems() {
+    public ResponseEntity<List<CustomItemDTO>> getAllItems() {
         System.out.print("Por lo menos llega la petción.......");
-        return itemService.getAllItems();
+        List<CustomItemDTO> items = itemService.getAllItems();
+        return ResponseEntity.ok(items);
     }
 
     /** BUSCAR POR NOMBRE COMO PARÁMETRO EN LA URL */
     @GetMapping("/name/{name}")
-    public List<CustomItemDTO> getItemsByName(@PathVariable String name) {
-        return itemService.getItemsByName(name);
+    public  ResponseEntity<List<CustomItemDTO>>getItemsByName(@PathVariable String name) {
+        List<CustomItemDTO> items = itemService.getItemsByName(name);
+        return ResponseEntity.ok(items);
+
     }
 
     /** BUSCAR POR CATEGORÍA COMO PARÁMETRO EN LA URL */
     @GetMapping("/category/{category}")
-    public List<CustomItemDTO> getItemsByCategory(@PathVariable String category) {
+    public ResponseEntity<List<CustomItemDTO>> getItemsByCategory(@PathVariable String category) {
         ItemCategory itemCategory = ItemCategory.valueOf(category.toUpperCase());
-        return itemService.getItemsByCategory(itemCategory);
+        List<CustomItemDTO> items = itemService.getItemsByCategory(itemCategory);
+        return ResponseEntity.ok(items);
     }
 
     /** BUSCAR POR PRECIO MENOR O IGUAL A UN VALOR */
     @GetMapping("/goldvalue/{goldValue}")
-    public List<CustomItemDTO> getItemsByGoldValue(@PathVariable int goldValue) {
-        return itemService.getItemsByGoldValue(goldValue);
+    public ResponseEntity<List<CustomItemDTO>> getItemsByGoldValue(@PathVariable int goldValue) {
+        List<CustomItemDTO> items = itemService.getItemsByGoldValue(goldValue);
+        return ResponseEntity.ok(items);
     }
 
     /** FILTROS COMBINADOS (OPCIONALES) Ejemplo:
@@ -51,13 +56,14 @@ public class ItemController {
      * http://localhost:8080/api/items/filter?&category=WEAPON&goldValue=1000
      * */
     @GetMapping("/filter")
-    public List<CustomItemDTO> getFilteredItems(
+    public ResponseEntity<List<CustomItemDTO>> getFilteredItems(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) Integer goldValue) {
 
         ItemCategory itemCategory = (category != null) ? ItemCategory.valueOf(category.toUpperCase()) : null;
-        return itemService.getFilteredItems(name, itemCategory, goldValue);
+        List<CustomItemDTO> items =  itemService.getFilteredItems(name, itemCategory, goldValue);
+        return ResponseEntity.ok(items);
     }
 
     /** Añadir Item a Character */

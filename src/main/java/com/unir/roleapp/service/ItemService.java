@@ -9,7 +9,9 @@ import com.unir.roleapp.repository.CharacterRepository;
 import com.unir.roleapp.repository.ItemRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,10 +74,10 @@ public class ItemService {
     /** AÑadir Item a Character */
     public CharacterEntity addItemToCharacter(Long characterId, Long itemId) {
         CharacterEntity character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new RuntimeException("Character not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         CustomItem customItem = itemRepository.findById(itemId)
-                .orElseThrow(() -> new RuntimeException("Item not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found"));
 
         // Agregar el item al personaje
         character.getCustomItems().add(customItem);
@@ -87,10 +89,10 @@ public class ItemService {
     /** Eliminar Item de Character */
     public CharacterEntity deleteItemFromCharacter(Long characterId, Long itemId) {
         CharacterEntity character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new RuntimeException("Character not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         CustomItem customItem = itemRepository.findById(itemId)
-                .orElseThrow(() -> new RuntimeException("Item not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found"));
 
         // Eliminar el item del personaje
         character.getCustomItems().remove(customItem);

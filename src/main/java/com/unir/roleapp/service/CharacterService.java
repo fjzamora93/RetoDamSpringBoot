@@ -71,7 +71,7 @@ public class CharacterService {
     /** CREA UN NUEVO PERSONAJE O SI EN EL REQUEST SE INCLUYE EL ID ACTUALIZA UNO YA EXISTENTE */
     public CharacterResponseDTO saveOrUpdateCharacter(CharacterRequestDTO characterDto) {
         RoleClass roleClass = roleClassRepository.findById(characterDto.getRoleClassId())
-                .orElseThrow(() -> new RuntimeException("Role class not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ROLCLASS NOT FOUND"));
 
         CharacterEntity characterEntity = modelMapper.map(characterDto, CharacterEntity.class);
         characterEntity.setRoleClass(roleClass);

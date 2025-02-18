@@ -5,6 +5,7 @@ import com.unir.roleapp.entity.Spell;
 import com.unir.roleapp.repository.SpellRepository;
 import com.unir.roleapp.service.SpellService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,17 +23,19 @@ public class SpellController {
 
     /** MOSTRAR TODOS */
     @GetMapping
-    public List<SpellDTO> getAllSpells() {
-        return spellService.getAllSpells();
+    public ResponseEntity<List<SpellDTO>> getAllSpells() {
+        List<SpellDTO> spells = spellService.getAllSpells();
+        return  ResponseEntity.ok(spells);
     }
 
     /** FILTRAR EN FUNCIÓN DEL NIVEL Y CLASE DEL PERSONAJE */
     @GetMapping("/filter")
-    public List<SpellDTO> getSpellsByLevelAndRoleClass(
+    public ResponseEntity<List<SpellDTO>> getSpellsByLevelAndRoleClass(
             @RequestParam int level,
             @RequestParam String roleClass
     ) {
-        return spellService.getSpellsByLevelAndRoleClass(level, roleClass);
+        List<SpellDTO> spells = spellService.getSpellsByLevelAndRoleClass(level, roleClass);
+        return  ResponseEntity.ok(spells);
     }
 
 

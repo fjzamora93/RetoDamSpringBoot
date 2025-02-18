@@ -81,4 +81,5 @@ public class CharacterEntity {
     @JoinColumn(name = "id_game_session")
     @JsonIgnore
     private GameSession gameSession;
+
 }

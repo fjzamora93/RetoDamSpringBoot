@@ -76,4 +76,11 @@ public class EntityToDtoMapper {
                 className
         );
     }
+
+    public CustomSpellDTO mapCustomSpellToDTO(CustomSpell spell) {
+        return new CustomSpellDTO(spell.getId(), spell.getName(), spell.getDescription(),
+                spell.getDice(), spell.getLevel(), spell.getCost(), spell.getImgUrl(),
+                spell.getCharacter().getId()
+        );
+    }
 }
