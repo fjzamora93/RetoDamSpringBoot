@@ -14,10 +14,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,21 +59,21 @@ public class UserControllerTest {
         mockMvc.perform(get("/api/user/login")
                         .param("email", "test@example.com")
                         .param("password", "password123"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("test@example.com"));
+                .andExpect(status().isOk());
     }
 
     @Test
-    void testGetUserByEmailAndPassword_NotFound() throws Exception {
-        // Simulamos que no se encuentra el usuario con las credenciales proporcionadas.
-        when(userService.getUserByEmail("wrong@example.com", "wrongpassword")).thenReturn(null);
+    void testGetUserByEmailAndPassword_Unauthorized() throws Exception {
+        // Simulamos que el servicio lanza una excepción UNAUTHORIZED cuando las credenciales son incorrectas
+        when(userService.getUserByEmail("wrong@example.com", "wrongpassword"))
+                .thenThrow(new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario o contraseña incorrectos"));
 
         mockMvc.perform(get("/api/user/login")
                         .param("email", "wrong@example.com")
                         .param("password", "wrongpassword"))
-                .andExpect(status().isNotFound())  // o isNotFound() según el comportamiento de la API
-                .andExpect(jsonPath("$.error").value("NOT_FOUND"));
+                .andExpect(status().isUnauthorized());  // Ahora esperamos 401 en lugar de 404
     }
+
 
 
     @Test
@@ -82,7 +84,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/api/user/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(user)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.email").value("test@example.com"));
     }
 

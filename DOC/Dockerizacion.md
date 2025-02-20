@@ -83,7 +83,7 @@ docker tag springbootroleplay fjzamora93/springbootroleplay:latest
 
 ```bash
 
-docker push javier/springbootroleplay:latest
+docker push fjzamora93/springbootroleplay:latest
 
 ```
 
