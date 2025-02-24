@@ -41,4 +41,5 @@ public class CustomItem {
     @JsonIgnore
     private GameSession gameSession;
 
+
 }

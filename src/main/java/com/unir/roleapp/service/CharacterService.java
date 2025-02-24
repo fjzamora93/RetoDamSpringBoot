@@ -70,23 +70,11 @@ public class CharacterService {
 
     /** CREA UN NUEVO PERSONAJE O SI EN EL REQUEST SE INCLUYE EL ID ACTUALIZA UNO YA EXISTENTE */
     public CharacterResponseDTO saveOrUpdateCharacter(CharacterRequestDTO characterDto) {
-        RoleClass roleClass = roleClassRepository.findById(characterDto.getRoleClassId())
+        RoleClass roleClass = roleClassRepository.findByName(characterDto.getRoleClass())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ROLCLASS NOT FOUND"));
 
         CharacterEntity characterEntity = modelMapper.map(characterDto, CharacterEntity.class);
         characterEntity.setRoleClass(roleClass);
-
-        // Buscar las habilidades por ID
-        if (characterDto.getSkillIds() != null) {
-            List<Skill> skills = skillRepository.findAllById(characterDto.getSkillIds());
-            characterEntity.setSkills(skills);
-        }
-
-        // Buscar los ítems por ID
-        if (characterDto.getItemIds() != null) {
-            List<CustomItem> customItems = itemRepository.findAllById(characterDto.getItemIds());
-            characterEntity.setCustomItems(customItems);
-        }
 
         CharacterEntity savedCharacter = characterRepository.save(characterEntity);
         return entityToDtoMapper.mapToCharacterResponseDTO(savedCharacter);

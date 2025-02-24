@@ -33,15 +33,13 @@ public class CharacterRequestDTO {
 
     // RELACIONES
     private Long userId;
-    private List<Long> itemIds;
-    private List<Long> skillIds;
-    private Long roleClassId;
+    private String roleClass;
     private GameSession gameSession;
 
     public CharacterRequestDTO(
             String name, String description, Race race, Gender gender, int size, int age, int gold,
             int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
-            String imgUrl, Long userId, List<Long> itemIds,  List<Long> skillIds, Long roleClassId)
+            String imgUrl, Long userId, String roleClass)
     {
         this.name = name;
         this.description = description;
@@ -58,8 +56,7 @@ public class CharacterRequestDTO {
         this.charisma = charisma;
         this.imgUrl = imgUrl;
         this.userId = userId;
-        this.itemIds = itemIds;
-        this.skillIds = skillIds;
-        this.roleClassId = roleClassId;
+
+        this.roleClass = roleClass;
     }
 }

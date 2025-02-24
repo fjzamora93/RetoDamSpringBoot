@@ -8,5 +8,4 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RoleClassRepository extends JpaRepository<RoleClass, Long> {
-    List<RoleClass> findByName(String name);
-}
+    Optional<RoleClass> findByName(String name);}

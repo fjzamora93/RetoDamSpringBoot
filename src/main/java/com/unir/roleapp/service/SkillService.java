@@ -10,9 +10,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +32,30 @@ public class SkillService {
                 skill -> modelMapper.map(skill, SkillDTO.class))
                 .collect(Collectors.toList());
     }
+
+    /** Obtener skills de un personaje */
+    public List<SkillDTO> getSkillsByCharacterId(Long characterId) {
+        List<Skill> skills = skillRepository.findByCharacter_Id(characterId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Skills not found"));
+
+        return skills.stream()
+                .map(skill -> modelMapper.map(skill, SkillDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    /**Añadir set de skills por defecto.*/
+    @Transactional
+    public List<SkillDTO> addDefaultSkills(Long characterId, List<Long> skillIds) {
+        if (skillIds.size() != 3) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Se requieren exactamente 3 habilidades.");
+
+        skillRepository.addDefaultSKills(characterId, skillIds.get(0), skillIds.get(1), skillIds.get(2));
+        List<Skill> skills = skillRepository.findAllById(skillIds);
+        return skills.stream()
+                .map(skill -> modelMapper.map(skill, SkillDTO.class))
+                .collect(Collectors.toList());
+    }
+
+
 
     /** Añadir SKill a Character */
     public CharacterEntity addSkillToCharacterEntity(
