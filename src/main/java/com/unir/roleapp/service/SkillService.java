@@ -35,8 +35,11 @@ public class SkillService {
 
     /** Obtener skills de un personaje */
     public List<SkillDTO> getSkillsByCharacterId(Long characterId) {
-        List<Skill> skills = skillRepository.findByCharacter_Id(characterId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Skills not found"));
+        List<Skill> skills = skillRepository.findByCharacterId(characterId);
+
+        if (skills.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Skills not found for character ID: " + characterId);
+        }
 
         return skills.stream()
                 .map(skill -> modelMapper.map(skill, SkillDTO.class))

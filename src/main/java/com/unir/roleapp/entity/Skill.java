@@ -1,5 +1,6 @@
 package com.unir.roleapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,11 +24,11 @@ public class Skill {
     @Column(name = "name") private String name;
     @Column(name = "description") private String description;
 
-//    UNIDIRECCIONAL
-//    @ManyToMany(
-//            mappedBy = "skills",
-//            cascade = CascadeType.ALL,
-//            fetch = FetchType.EAGER
-//    )
-//    private List<CharacterEntity> characterEntities;
+    @ManyToMany(
+            mappedBy = "skills",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JsonIgnore
+    private List<CharacterEntity> characters;
 }
