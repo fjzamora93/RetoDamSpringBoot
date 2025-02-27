@@ -61,14 +61,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody UserDTO newUser) {
         try {
-
-            // Encriptar la contraseña
-            String encryptedPassword = new BCryptPasswordEncoder().encode(newUser.getPassword());
-            newUser.setPassword(encryptedPassword);
-
-            // Guardar el nuevo usuario
             userService.save(newUser);
-
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("Usuario registrado exitosamente");
 
