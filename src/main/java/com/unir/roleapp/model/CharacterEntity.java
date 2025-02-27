@@ -1,11 +1,10 @@
-package com.unir.roleapp.entity;
+package com.unir.roleapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
 import jakarta.persistence.*;

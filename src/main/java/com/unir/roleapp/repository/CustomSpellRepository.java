@@ -1,6 +1,6 @@
 package com.unir.roleapp.repository;
 
-import com.unir.roleapp.entity.CustomSpell;
+import com.unir.roleapp.model.CustomSpell;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,7 +1,5 @@
 package com.unir.roleapp.repository;
-import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.CustomSpell;
-import com.unir.roleapp.entity.Skill;
+import com.unir.roleapp.model.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SkillRepository extends JpaRepository<Skill, Long> {
 

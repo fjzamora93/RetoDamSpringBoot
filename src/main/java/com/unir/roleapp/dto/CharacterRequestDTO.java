@@ -1,13 +1,11 @@
 package com.unir.roleapp.dto;
-import com.unir.roleapp.entity.GameSession;
+import com.unir.roleapp.model.GameSession;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
-
 
 
 @Getter

@@ -1,7 +1,7 @@
 package com.unir.roleapp.mapper;
 
 import com.unir.roleapp.dto.*;
-import com.unir.roleapp.entity.*;
+import com.unir.roleapp.model.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

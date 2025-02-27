@@ -1,7 +1,7 @@
 package com.unir.roleapp.controller;
 
 import com.unir.roleapp.dto.CustomItemDTO;
-import com.unir.roleapp.entity.CharacterEntity;
+import com.unir.roleapp.model.CharacterEntity;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;

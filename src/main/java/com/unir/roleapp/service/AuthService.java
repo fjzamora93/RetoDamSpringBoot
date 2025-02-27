@@ -1,7 +1,7 @@
 package com.unir.roleapp.service;
 
-import com.unir.roleapp.auth.CustomUserDetails;
-import com.unir.roleapp.entity.User;
+import com.unir.roleapp.model.CustomUserDetails;
+import com.unir.roleapp.model.User;
 import com.unir.roleapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

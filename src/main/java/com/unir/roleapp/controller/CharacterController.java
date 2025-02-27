@@ -3,7 +3,6 @@ package com.unir.roleapp.controller;
 
 import com.unir.roleapp.dto.CharacterRequestDTO;
 import com.unir.roleapp.dto.CharacterResponseDTO;
-import com.unir.roleapp.entity.CharacterEntity;
 import com.unir.roleapp.service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/characters")

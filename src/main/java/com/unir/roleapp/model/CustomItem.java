@@ -1,4 +1,4 @@
-package com.unir.roleapp.entity;
+package com.unir.roleapp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.enumm.StatType;

@@ -1,8 +1,8 @@
 package com.unir.roleapp.controller;
 
-import com.unir.roleapp.SecurityConfig.JwtTokenProvider;
-import com.unir.roleapp.auth.LoginRequest;
-import com.unir.roleapp.auth.LoginResponse;
+import com.unir.roleapp.security.JwtTokenProvider;
+import com.unir.roleapp.dto.LoginRequest;
+import com.unir.roleapp.dto.LoginResponse;
 import com.unir.roleapp.dto.UserDTO;
 import com.unir.roleapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +12,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/auth")

@@ -1,7 +1,6 @@
 package com.unir.roleapp.controller;
 
 import com.unir.roleapp.dto.CustomSpellDTO;
-import com.unir.roleapp.entity.CustomSpell;
 import com.unir.roleapp.service.CustomSpellService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

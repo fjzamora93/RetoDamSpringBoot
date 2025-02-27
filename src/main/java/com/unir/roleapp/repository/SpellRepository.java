@@ -1,13 +1,10 @@
 package com.unir.roleapp.repository;
-import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.RoleClass;
-import com.unir.roleapp.entity.Spell;
+import com.unir.roleapp.model.Spell;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SpellRepository extends JpaRepository<Spell, Long> {
 

@@ -1,6 +1,5 @@
-package com.unir.roleapp.entity;
+package com.unir.roleapp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 

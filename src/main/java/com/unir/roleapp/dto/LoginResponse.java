@@ -1,4 +1,4 @@
-package com.unir.roleapp.auth;
+package com.unir.roleapp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,39 +1,34 @@
-package com.unir.roleapp.entity;
+package com.unir.roleapp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Table(name = "role_class")
+@Table(name = "skill")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleClass {
+public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "name") private String name;
+    @Column(name = "description") private String description;
 
     @ManyToMany(
-            mappedBy = "roleClasses",
+            mappedBy = "skills",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
     @JsonIgnore
-    private List<Spell> spells;
-
-
-//    @OneToOne(mappedBy = "roleClass")
-//    private CharacterEntity characterEntity;
+    private List<CharacterEntity> characters;
 }

@@ -1,7 +1,7 @@
 package com.unir.roleapp.service;
 
 import com.unir.roleapp.dto.*;
-import com.unir.roleapp.entity.*;
+import com.unir.roleapp.model.*;
 import com.unir.roleapp.repository.*;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
 import org.modelmapper.ModelMapper;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

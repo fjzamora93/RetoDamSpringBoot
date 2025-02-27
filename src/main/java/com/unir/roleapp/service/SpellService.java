@@ -1,8 +1,8 @@
 package com.unir.roleapp.service;
 
 import com.unir.roleapp.dto.SpellDTO;
-import com.unir.roleapp.entity.RoleClass;
-import com.unir.roleapp.entity.Spell;
+import com.unir.roleapp.model.RoleClass;
+import com.unir.roleapp.model.Spell;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
 import com.unir.roleapp.repository.RoleClassRepository;
 import com.unir.roleapp.repository.SpellRepository;

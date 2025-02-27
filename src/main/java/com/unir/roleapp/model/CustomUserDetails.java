@@ -1,6 +1,5 @@
-package com.unir.roleapp.auth;
+package com.unir.roleapp.model;
 
-import com.unir.roleapp.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;

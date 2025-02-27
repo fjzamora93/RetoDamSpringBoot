@@ -1,8 +1,7 @@
 package com.unir.roleapp.service;
 
 import com.unir.roleapp.dto.UserDTO;
-import com.unir.roleapp.entity.User;
-import com.unir.roleapp.mapper.EntityToDtoMapper;
+import com.unir.roleapp.model.User;
 import com.unir.roleapp.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

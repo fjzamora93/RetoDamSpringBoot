@@ -1,14 +1,10 @@
 package com.unir.roleapp.service;
 
 import com.unir.roleapp.dto.CustomSpellDTO;
-import com.unir.roleapp.dto.SpellDTO;
-import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.CustomSpell;
-import com.unir.roleapp.entity.RoleClass;
-import com.unir.roleapp.entity.Spell;
+import com.unir.roleapp.model.CharacterEntity;
+import com.unir.roleapp.model.CustomSpell;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
 import com.unir.roleapp.repository.CharacterRepository;
-import com.unir.roleapp.repository.RoleClassRepository;
 import com.unir.roleapp.repository.CustomSpellRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomSpellService {

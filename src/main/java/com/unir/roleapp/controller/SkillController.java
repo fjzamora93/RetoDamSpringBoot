@@ -1,16 +1,13 @@
 package com.unir.roleapp.controller;
 
 import com.unir.roleapp.dto.SkillDTO;
-import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.Skill;
-import com.unir.roleapp.repository.SkillRepository;
+import com.unir.roleapp.model.CharacterEntity;
 import com.unir.roleapp.service.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

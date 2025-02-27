@@ -1,7 +1,7 @@
 package com.unir.roleapp.repository;
 
-import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.User;
+import com.unir.roleapp.model.CharacterEntity;
+import com.unir.roleapp.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

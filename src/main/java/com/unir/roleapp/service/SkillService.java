@@ -1,8 +1,8 @@
 package com.unir.roleapp.service;
 
 import com.unir.roleapp.dto.SkillDTO;
-import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.Skill;
+import com.unir.roleapp.model.CharacterEntity;
+import com.unir.roleapp.model.Skill;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
 import com.unir.roleapp.repository.CharacterRepository;
 import com.unir.roleapp.repository.SkillRepository;
@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

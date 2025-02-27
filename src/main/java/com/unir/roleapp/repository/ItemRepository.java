@@ -1,5 +1,5 @@
 package com.unir.roleapp.repository;
-import com.unir.roleapp.entity.CustomItem;
+import com.unir.roleapp.model.CustomItem;
 import com.unir.roleapp.enumm.ItemCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package com.unir.roleapp.entity;
+package com.unir.roleapp.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

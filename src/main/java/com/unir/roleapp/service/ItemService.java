@@ -1,8 +1,8 @@
 package com.unir.roleapp.service;
 
 import com.unir.roleapp.dto.CustomItemDTO;
-import com.unir.roleapp.entity.CharacterEntity;
-import com.unir.roleapp.entity.CustomItem;
+import com.unir.roleapp.model.CharacterEntity;
+import com.unir.roleapp.model.CustomItem;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
 import com.unir.roleapp.repository.CharacterRepository;

@@ -1,4 +1,4 @@
-package com.unir.roleapp.SecurityConfig;
+package com.unir.roleapp.security;
 
 import com.unir.roleapp.dto.UserDTO;
 import com.unir.roleapp.service.UserService;
