@@ -12,14 +12,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginResponse {
-    private String email;
     private String token;
+    private UserDTO user;
     private Date expiration;
 
 
     public LoginResponse(String message) {
-        this.email = null;
         this.token = message;
+        this.user = null;
         this.expiration = null;
     }
 

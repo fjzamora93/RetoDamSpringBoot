@@ -44,9 +44,11 @@ public class AuthController {
 
             // Generar token JWT
             String token = jwtTokenProvider.createToken(authentication.getName());
-
-            // Devolver respuesta con el token
-            return ResponseEntity.ok(new LoginResponse(loginRequest.getEmail(), token, jwtTokenProvider.getExpirationDateFromToken(token)));
+            return ResponseEntity.ok(new LoginResponse(
+                    token,
+                    userService.getUserByEmail(loginRequest.getEmail()),
+                    jwtTokenProvider.getExpirationDateFromToken(token))
+            );
 
         } catch (BadCredentialsException e) {
             // Credenciales inválidas
