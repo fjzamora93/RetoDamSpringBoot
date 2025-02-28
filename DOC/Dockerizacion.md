@@ -1,5 +1,18 @@
 # Pasos para dockerizar
 
+
+```
+# Secuencia completa
+
+mvn clean install 
+docker build -t springbootroleplay .
+docker tag springbootroleplay fjzamora93/springbootroleplay:latest
+docker push fjzamora93/springbootroleplay:latest
+```
+
+Para probar la imagen de docker:
+docker run -p 8080:8080 mi-aplicacion
+
 ### 1. CRear un Dockerfile en el directorio raiz del proyecto
 
 ```bash
