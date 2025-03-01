@@ -27,7 +27,7 @@ public class RoleClass {
     @ManyToMany(
             mappedBy = "roleClasses",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JsonIgnore
     private List<Spell> spells;

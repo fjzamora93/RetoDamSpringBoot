@@ -7,6 +7,9 @@ import com.unir.roleapp.mapper.EntityToDtoMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -75,10 +78,12 @@ public class CharacterService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ROLCLASS NOT FOUND"));
         System.out.println("ROle encontrado: " + roleClass);
 
-
-        User user = userRepository.findById(characterDto.getUserId())
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String username = userDetails.getUsername();
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NOT FOUND"));
-        System.out.println("Usuario encontrado" + user);
+        System.out.println("Usuario encontrado: " + user);
 
         CharacterEntity characterEntity = modelMapper.map(characterDto, CharacterEntity.class);
         characterEntity.setRoleClass(roleClass);
