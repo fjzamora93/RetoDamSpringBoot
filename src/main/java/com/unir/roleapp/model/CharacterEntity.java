@@ -48,7 +48,7 @@ public class CharacterEntity {
     // RELACION BIDIRECCIONAL
     @ManyToOne
     @JoinColumn(name = "id_user")
-    @JsonBackReference
+    @JsonBackReference("user-character")
     private User user;
 
 

@@ -1,5 +1,6 @@
 package com.unir.roleapp.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -35,5 +36,6 @@ public class Spell {
             joinColumns = @JoinColumn( name = "id_spell" ),
             inverseJoinColumns = @JoinColumn( name = "id_role_class" )
     )
+    @JsonManagedReference("spell-roleClass")
     private List<RoleClass> roleClasses;
 }

@@ -43,19 +43,6 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
-    /**
-     * VALIDAR CREDENCIALES
-     */
-    public boolean validateCredentials(String email, String password) {
-        User user = userRepository.findByEmail(email)
-                .orElse(null);
-
-        if (user == null) {
-            return false;
-        }
-
-        return passwordEncoder.matches(password, user.getPassword());
-    }
 
     /**
      * GUARDAR USUARIO (ApiUser)

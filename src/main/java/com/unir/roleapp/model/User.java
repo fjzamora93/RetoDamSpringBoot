@@ -19,7 +19,6 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonManagedReference
     private Long id;
 
     @Column(name = "name")
@@ -32,6 +31,7 @@ public class User {
     private String password;
 
     @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
+    @JsonManagedReference("user-character")
     private List<CharacterEntity> characterEntities;
 
 
