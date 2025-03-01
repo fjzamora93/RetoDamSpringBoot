@@ -46,9 +46,6 @@ public class EntityToDtoMapper {
         RoleClassDTO dto = new RoleClassDTO();
         dto.setId(roleClass.getId());
         dto.setName(roleClass.getName());
-        dto.setSpells(roleClass.getSpells().stream()
-                .map(this::mapSpellToDTO)
-                .collect(Collectors.toList()));
         return dto;
     }
 

@@ -24,13 +24,7 @@ public class RoleClass {
 
     @Column(name = "name") private String name;
 
-    @ManyToMany(
-            mappedBy = "roleClasses",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    @JsonIgnore
-    private List<Spell> spells;
+
 
 
 //    @OneToOne(mappedBy = "roleClass")

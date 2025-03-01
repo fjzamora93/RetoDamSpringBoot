@@ -36,6 +36,5 @@ public class Spell {
             joinColumns = @JoinColumn( name = "id_spell" ),
             inverseJoinColumns = @JoinColumn( name = "id_role_class" )
     )
-    @JsonManagedReference("spell-roleClass")
     private List<RoleClass> roleClasses;
 }

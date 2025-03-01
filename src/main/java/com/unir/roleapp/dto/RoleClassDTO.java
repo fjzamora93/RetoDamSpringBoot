@@ -24,6 +24,4 @@ import java.util.List;
 public class RoleClassDTO {
     private Long id;
     private String name;
-
-    private List<SpellDTO> spells;
 }
