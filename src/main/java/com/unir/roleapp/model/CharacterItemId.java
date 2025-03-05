@@ -16,9 +16,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class CharacterItemId implements Serializable {
 
-    @Column(name = "id_character")
     private Long characterId;
-
-    @Column(name = "id_item")
     private Long itemId;
 }

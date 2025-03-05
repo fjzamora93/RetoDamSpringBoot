@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
@@ -13,18 +15,20 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CharacterItemResponseDTO {
     private Long characterId;
-    private CustomItem customItem;
     private int quantity;
+
+    private CustomItemDTO customItem;
 
 
     public static CharacterItemResponseDTO toDTO(CharacterItem characterItem) {
+
         if (characterItem == null) {
             return null;
         }
         return new CharacterItemResponseDTO(
                 characterItem.getCharacter().getId(),
-                characterItem.getCustomItem(),
-                characterItem.getQuantity()
+                characterItem.getQuantity(),
+                characterItem.getCustomItem().toDTO()
         );
     }
 

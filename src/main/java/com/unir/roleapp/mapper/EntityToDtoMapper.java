@@ -53,7 +53,7 @@ public class EntityToDtoMapper {
         return new CustomItemDTO(
                 customItem.getId(), customItem.getName(), customItem.getDescription(),
                 customItem.getImgUrl(), customItem.getGoldValue(), customItem.getCategory(), customItem.getDice(),
-                customItem.getStatType(), customItem.getStatValue()
+                customItem.getStatType(), customItem.getStatValue(), customItem.getGameSession().getId()
         );
     }
 

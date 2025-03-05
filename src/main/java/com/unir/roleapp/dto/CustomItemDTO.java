@@ -22,7 +22,6 @@ public class CustomItemDTO {
     private StatType statType;
     private int statValue;
 
-//    RELACIÓN UNIDIRECCIONAL, NO HACE FALTA INDICAR LA SESSIÓN A LA QUE PERTENECE
-//    private GameSession gameSession;
+    private Long gameSession;
 
 }

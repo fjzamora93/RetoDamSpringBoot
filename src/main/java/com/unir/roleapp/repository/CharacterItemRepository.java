@@ -20,6 +20,9 @@ public interface CharacterItemRepository extends JpaRepository<CharacterItem, Ch
     @Query("SELECT ci FROM CharacterItem ci WHERE ci.character.id = :characterId")
     List<CharacterItem> findByCharacterId(@Param("characterId") Long characterId);
 
+    @Query("SELECT ci FROM CharacterItem ci WHERE ci.character.id = :characterId AND ci.customItem.id = :customItemId")
+    Optional<CharacterItem> findByCharacterIdAndCustomItemId(@Param("characterId") Long characterId, @Param("customItemId") Long customItemId);
+
 
     // Eliminar un item de un personaje por IDs
     @Modifying

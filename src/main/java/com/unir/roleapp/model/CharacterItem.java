@@ -12,7 +12,6 @@ import lombok.Setter;
 @Table(name = "character_item")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class CharacterItem {
 
@@ -32,4 +31,10 @@ public class CharacterItem {
     @JoinColumn(name = "id_item")
     private CustomItem customItem;
 
+    public CharacterItem(CharacterItemId id, int quantity, CharacterEntity character, CustomItem customItem) {
+        this.id = id;
+        this.quantity = quantity;
+        this.character = character;
+        this.customItem = customItem;
+    }
 }
