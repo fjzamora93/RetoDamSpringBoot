@@ -26,8 +26,6 @@ public class CharacterService {
     @Autowired private CharacterRepository characterRepository;
     @Autowired private EntityToDtoMapper entityToDtoMapper;
     @Autowired private RoleClassRepository roleClassRepository;
-    @Autowired private SkillRepository skillRepository;
-    @Autowired private ItemRepository itemRepository;
     @Autowired private UserRepository userRepository;
 
 

@@ -1,20 +1,21 @@
 package com.unir.roleapp.model;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.enumm.StatType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "custom_item")
+@Table(name = "item_template")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomItem {
+public class ItemTemplate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +33,6 @@ public class CustomItem {
     @Enumerated(EnumType.STRING)
     @Column(name= "modifiedstat") private StatType statType;
     @Column(name= "statvalue") private int statValue;
-
-    // NO PODREMOS IDENTIFICAR LA SESSIÓN DE CADA OBJETO, AUNQUE LOS OBJETOS ESTARÁN TODOS DENTRO DE LA SESIÓN
-    @ManyToOne
-    @JoinColumn(name = "id_game_session")
-    private GameSession gameSession;
 
 
 }

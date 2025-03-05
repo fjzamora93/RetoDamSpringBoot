@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<CustomItem, Long> {
+public interface CustomItemRepository extends JpaRepository<CustomItem, Long> {
     @Query("SELECT i FROM CustomItem i WHERE LOWER(i.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<CustomItem> findByName(@Param("name") String name);
 

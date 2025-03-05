@@ -9,7 +9,7 @@ import com.unir.roleapp.model.User;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
 import com.unir.roleapp.repository.CharacterRepository;
 import com.unir.roleapp.repository.GameSessionRepository;
-import com.unir.roleapp.repository.ItemRepository;
+import com.unir.roleapp.repository.CustomItemRepository;
 import com.unir.roleapp.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class GameSessionService {
 
     @Autowired private GameSessionRepository gameSessionRepository;
     @Autowired private ModelMapper modelMapper;
-    @Autowired private ItemRepository itemRepository;
+    @Autowired private CustomItemRepository customItemRepository;
     @Autowired private CharacterRepository characterRepository;
     @Autowired private EntityToDtoMapper entityToDtoMapper;
     @Autowired private UserRepository userRepository;
@@ -76,13 +76,13 @@ public class GameSessionService {
 
     // ADD ITEM TO SESSION
     public CustomItemDTO addItemToGameSession(Long gameSessionId, Long itemId) {
-        CustomItem  customItem = itemRepository.findById(itemId)
+        CustomItem  customItem = customItemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found"));
         GameSession gameSession = gameSessionRepository
                 .findById(gameSessionId)
                 .orElseThrow(() -> new RuntimeException("Session not found"));
         customItem.setGameSession(gameSession);
-        CustomItem updatedItem = itemRepository.save(customItem);
+        CustomItem updatedItem = customItemRepository.save(customItem);
 
         return modelMapper.map(updatedItem, CustomItemDTO.class);
 
