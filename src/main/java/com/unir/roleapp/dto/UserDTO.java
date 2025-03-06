@@ -34,7 +34,11 @@ public class UserDTO implements UserDetails {
         this.email = email;
         this.password = password;
     }
-
+    public UserDTO( Long id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

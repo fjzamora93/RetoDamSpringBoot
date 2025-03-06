@@ -78,7 +78,7 @@ public class CharacterEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_game_session")
-    @JsonIgnore
+    @JsonBackReference("character-session")
     private GameSession gameSession;
 
 }

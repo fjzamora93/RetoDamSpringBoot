@@ -2,6 +2,7 @@ package com.unir.roleapp.mapper;
 
 import com.unir.roleapp.dto.*;
 import com.unir.roleapp.model.*;
+import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,27 +11,38 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-/**
- * Mapea de CHaracterEntity a CharacterResponseDTO.
- * Para mapear correctamente, el mapeo se realiza en las siguietnes fases:
- * - Mapea el propio personaje.
- * - Mapea sus Item.
- * - Mapea sus Skills.
- * - Mapea el RoleCLass del personaje.
- * - Mapea los Spells que están dentro de la lista de RoleCLass
- * */
 @Component
 public class EntityToDtoMapper {
     @Autowired private ModelMapper modelMapper;
 
+    @PostConstruct
+    public void configureMappings() {
+        // Configurar mapeo de CharacterEntity a CharacterResponseDTO
+        modelMapper.createTypeMap(CharacterEntity.class, CharacterResponseDTO.class)
+                .addMappings(mapper -> {
+                    // Mapear gameSession.id a gameSessionId
+                    mapper.map(src -> src.getGameSession().getId(), CharacterResponseDTO::setGameSessionId);
+                    // Mapear user.id a userId
+                    mapper.map(src -> src.getUser().getId(), CharacterResponseDTO::setUserId);
+                    // Ignorar campos que se asignarán manualmente
+                    mapper.skip(CharacterResponseDTO::setRoleClass);
+                    mapper.skip(CharacterResponseDTO::setItems);
+                    mapper.skip(CharacterResponseDTO::setSkills);
+                });
+
+        // Configurar mapeo de CharacterRequestDTO a CharacterEntity (existente)
+        modelMapper.createTypeMap(CharacterRequestDTO.class, CharacterEntity.class)
+                .addMappings(mapper -> {
+                    mapper.skip(CharacterEntity::setGameSession);
+                    mapper.skip(CharacterEntity::setRoleClass);
+                    mapper.skip(CharacterEntity::setUser);
+                });
+    }
+
     public CharacterResponseDTO mapToCharacterResponseDTO(CharacterEntity characterEntity) {
         CharacterResponseDTO dto = modelMapper.map(characterEntity, CharacterResponseDTO.class);
 
-        if (characterEntity.getGameSession() != null) {
-            dto.setGameSessionId(characterEntity.getGameSession().getId());
-
-        }
-        dto.setUserId(characterEntity.getUser().getId());
+        // Asignaciones manuales SOLO para campos complejos
         dto.setRoleClass(mapRoleClassToDTO(characterEntity.getRoleClass()));
         dto.setItems(characterEntity.getCustomItems().stream()
                 .map(this::mapItemToDTO)
@@ -61,10 +73,6 @@ public class EntityToDtoMapper {
         return new SkillDTO(skill.getId(), skill.getName(), skill.getDescription());
     }
 
-    public SpellDTO mapSpellToDTO(Spell spell) {
-        return new SpellDTO(spell.getId(), spell.getName(), spell.getDescription(),
-                spell.getDice(), spell.getLevel(), spell.getCost(), spell.getImgUrl());
-    }
 
 
     public SpellDTO mapSpellWithClassToDTO(Spell spell, List<String> className) {

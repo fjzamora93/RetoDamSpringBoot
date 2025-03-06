@@ -1,6 +1,7 @@
 package com.unir.roleapp.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.unir.roleapp.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -34,5 +35,13 @@ public class User {
     @JsonManagedReference("user-character")
     private List<CharacterEntity> characterEntities;
 
+
+    public UserDTO toDTO() {
+        return  new UserDTO(
+                this.id,
+                this.name,
+                this.email
+        );
+    }
 
 }

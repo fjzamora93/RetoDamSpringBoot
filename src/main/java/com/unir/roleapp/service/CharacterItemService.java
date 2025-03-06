@@ -1,8 +1,7 @@
 package com.unir.roleapp.service;
 
-import com.unir.roleapp.dto.CharacterItemResponseDTO;
+import com.unir.roleapp.dto.CharacterItemDTO;
 import com.unir.roleapp.dto.CustomItemDTO;
-import com.unir.roleapp.mapper.EntityToDtoMapper;
 import com.unir.roleapp.model.*;
 import com.unir.roleapp.repository.CharacterItemRepository;
 import com.unir.roleapp.repository.CharacterRepository;
@@ -10,12 +9,10 @@ import com.unir.roleapp.repository.CustomItemRepository;
 import com.unir.roleapp.repository.GameSessionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,10 +26,10 @@ public class CharacterItemService {
     @Autowired private CharacterRepository characterRepository;
 
     // Método para obtener todos los items de un personaje
-    public List<CharacterItemResponseDTO> getCustomItemsByCharacter(Long characterId) {
+    public List<CharacterItemDTO> getCustomItemsByCharacter(Long characterId) {
         List<CharacterItem> items = characterItemRepository.findByCharacterId(characterId);
         return items.stream()
-                .map(CharacterItemResponseDTO::toDTO)
+                .map(CharacterItemDTO::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -40,12 +37,13 @@ public class CharacterItemService {
     public void deleteItemFromCharacter(Long characterId, Long itemId) {
         characterItemRepository.deleteByCharacterIdAndItemId(characterId, itemId);
     }
-    public CharacterItemResponseDTO addOrUpdateItemToCharacter(
+    public CharacterItemDTO addOrUpdateItemToCharacter(
             Long characterId,
             CustomItemDTO customItemDTO,
             int quantity
     ) {
         // Buscar la sesión de juego asociada al personaje
+
         GameSession gameSession = gameSessionRepository
                 .findByCharacterId(characterId)
                 .orElseThrow(() -> new EntityNotFoundException("Game Session not found"));
@@ -73,7 +71,7 @@ public class CharacterItemService {
                         customItem
                 ));
 
-        return CharacterItemResponseDTO.toDTO(characterItemRepository.save(characterItem));
+        return CharacterItemDTO.toDTO(characterItemRepository.save(characterItem));
     }
 
 }

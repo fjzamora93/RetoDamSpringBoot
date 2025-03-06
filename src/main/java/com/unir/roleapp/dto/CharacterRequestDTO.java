@@ -32,7 +32,7 @@ public class CharacterRequestDTO {
     // RELACIONES
     private Long userId;
     private String roleClass;
-    private GameSession gameSession;
+    private Long gameSessionId;
 
     public CharacterRequestDTO(
             String name, String description, Race race, Gender gender, int size, int age, int gold,

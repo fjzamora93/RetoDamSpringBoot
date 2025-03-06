@@ -24,7 +24,7 @@ import java.util.Optional;
 public interface CharacterRepository extends JpaRepository<CharacterEntity, Long> {
 
     // BÚSQUEDA PERSONALIZADA QUE DEUVVLEVE UNA LISTA
-    List<CharacterEntity> findByUser(User user);
+    List<CharacterEntity> findByUser_Id(Long userId);
 
     // BÚSQUEDA PERSONALIZADA QUE DEVUELVE UN RESUTLADO
     Optional<CharacterEntity> findByName(String name);

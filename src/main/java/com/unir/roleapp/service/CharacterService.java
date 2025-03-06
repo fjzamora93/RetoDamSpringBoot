@@ -27,6 +27,7 @@ public class CharacterService {
     @Autowired private EntityToDtoMapper entityToDtoMapper;
     @Autowired private RoleClassRepository roleClassRepository;
     @Autowired private UserRepository userRepository;
+    @Autowired private GameSessionRepository gameSessionRepository;
 
 
     /** LISTA COMPLETA DE PERSONAJES
@@ -44,8 +45,7 @@ public class CharacterService {
 
     /** LISTA DE PERSONAJES POR USUARIO */
     public List<CharacterResponseDTO> getCharactersByUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
-        List<CharacterEntity> characters = characterRepository.findByUser(user);
+        List<CharacterEntity> characters = characterRepository.findByUser_Id(userId);
         return characters.stream()
                 .map(entityToDtoMapper::mapToCharacterResponseDTO)
                 .collect(Collectors.toList());
@@ -70,28 +70,38 @@ public class CharacterService {
 
     /** CREA UN NUEVO PERSONAJE O SI EN EL REQUEST SE INCLUYE EL ID ACTUALIZA UNO YA EXISTENTE */
     public CharacterResponseDTO saveOrUpdateCharacter(CharacterRequestDTO characterDto) {
-        System.out.println("Hemos llegado hasta aquí, lo cual quiere decir que estamos guardando el personaje");
+        System.out.println("Guardando/actualizando personaje...");
 
+        // Mapear campos básicos del DTO a la entidad (ignorando gameSession, roleClass y user)
+        CharacterEntity characterEntity = modelMapper.map(characterDto, CharacterEntity.class);
+
+        System.out.println("characterEntity ___________________= " + characterEntity);
+
+        // Asignar campos complejos MANUALMENTE
+        // 1. RoleClass
         RoleClass roleClass = roleClassRepository.findByName(characterDto.getRoleClass())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ROLCLASS NOT FOUND"));
-        System.out.println("ROle encontrado: " + roleClass);
+        characterEntity.setRoleClass(roleClass);
 
+        // 2. GameSession
+        GameSession gameSession = gameSessionRepository.findById(characterDto.getGameSessionId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "GAMESESSION NOT FOUND"));
+        characterEntity.setGameSession(gameSession);
+
+        // 3. User
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String username = userDetails.getUsername();
-        User user = userRepository.findByEmail(username)
+        User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NOT FOUND"));
-        System.out.println("Usuario encontrado: " + user);
-
-        CharacterEntity characterEntity = modelMapper.map(characterDto, CharacterEntity.class);
-        characterEntity.setRoleClass(roleClass);
         characterEntity.setUser(user);
 
+        // Guardar la entidad
         CharacterEntity savedCharacter = characterRepository.save(characterEntity);
-        System.out.println(savedCharacter);
+
+        System.out.println("GUARDAAAAAAAAAAAAAADOOOOO ___________________= " + savedCharacter);
+
         return entityToDtoMapper.mapToCharacterResponseDTO(savedCharacter);
     }
-
 
 
 

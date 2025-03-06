@@ -31,7 +31,7 @@ public class UserService {
      */
     public UserDTO getUserById(Long id) {
         return userRepository.findById(id)
-                .map(user -> modelMapper.map(user, UserDTO.class))
+                .map(User::toDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
@@ -40,7 +40,7 @@ public class UserService {
      */
     public UserDetails getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .map(user -> modelMapper.map(user, UserDTO.class))
+                .map(User::toDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 

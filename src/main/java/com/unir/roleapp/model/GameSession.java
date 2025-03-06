@@ -1,6 +1,7 @@
 package com.unir.roleapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,11 +26,15 @@ public class GameSession {
     private User user;
 
     @OneToMany( mappedBy = "gameSession", cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
+    @JsonManagedReference("character-session")
     private List<CharacterEntity>  characters;
+
 
     @OneToMany( mappedBy = "gameSession", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<CustomItem>  customItems;
+
+
 
     public GameSession(User user) {
         this.user = user;
