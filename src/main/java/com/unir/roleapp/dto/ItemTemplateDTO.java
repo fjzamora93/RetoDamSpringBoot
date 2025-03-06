@@ -1,19 +1,17 @@
 package com.unir.roleapp.dto;
+
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.enumm.StatType;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
-import java.util.stream.Collector;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomItemDTO {
+public class ItemTemplateDTO {
     private Long id;
     private String name;
     private String description;
@@ -21,11 +19,8 @@ public class CustomItemDTO {
     private int goldValue;
     private ItemCategory category;
     private int dice;
-    
+
     private StatType statType;
     private int statValue;
-
-    private Long gameSession;
-
 
 }

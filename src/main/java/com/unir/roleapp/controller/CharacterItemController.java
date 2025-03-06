@@ -21,7 +21,7 @@ public class CharacterItemController {
     private CharacterItemService characterItemService;
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/character/{id}")
     public ResponseEntity<List<CharacterItemResponseDTO>> getItemsByCharacterId(@PathVariable Long id) {
         List<CharacterItemResponseDTO> items = characterItemService.getCustomItemsByCharacter(id);
         return ResponseEntity.ok(items);
