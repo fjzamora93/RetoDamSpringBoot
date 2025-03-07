@@ -6,6 +6,7 @@ import com.unir.roleapp.repository.*;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,12 +62,17 @@ public class CharacterService {
     }
 
     /** DELETE */
-    public void deleteCharacter(Long id) {
+    public void deleteById(Long id) {
         if (!characterRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Personaje no encontrado");
         }
-        characterRepository.deleteById(id);
+        try {
+            characterRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "No se puede eliminar el personaje porque está en uso.");
+        }
     }
+
 
     /** CREA UN NUEVO PERSONAJE O SI EN EL REQUEST SE INCLUYE EL ID ACTUALIZA UNO YA EXISTENTE */
     public CharacterResponseDTO saveOrUpdateCharacter(CharacterRequestDTO characterDto) {
@@ -75,7 +81,7 @@ public class CharacterService {
         // Mapear campos básicos del DTO a la entidad (ignorando gameSession, roleClass y user)
         CharacterEntity characterEntity = modelMapper.map(characterDto, CharacterEntity.class);
 
-        System.out.println("characterEntity ___________________= " + characterEntity);
+        System.out.println("characterEntity ___________________= " + characterEntity.toString());
 
         // Asignar campos complejos MANUALMENTE
         // 1. RoleClass

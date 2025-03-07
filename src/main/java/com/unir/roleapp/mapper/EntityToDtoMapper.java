@@ -44,9 +44,7 @@ public class EntityToDtoMapper {
 
         // Asignaciones manuales SOLO para campos complejos
         dto.setRoleClass(mapRoleClassToDTO(characterEntity.getRoleClass()));
-        dto.setItems(characterEntity.getCustomItems().stream()
-                .map(this::mapItemToDTO)
-                .collect(Collectors.toList()));
+
         dto.setSkills(characterEntity.getSkills().stream()
                 .map(this::mapSkillToDTO)
                 .collect(Collectors.toList()));

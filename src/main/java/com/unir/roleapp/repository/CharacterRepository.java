@@ -3,6 +3,9 @@ package com.unir.roleapp.repository;
 import com.unir.roleapp.model.CharacterEntity;
 import com.unir.roleapp.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +31,11 @@ public interface CharacterRepository extends JpaRepository<CharacterEntity, Long
 
     // BÚSQUEDA PERSONALIZADA QUE DEVUELVE UN RESUTLADO
     Optional<CharacterEntity> findByName(String name);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM CharacterEntity c WHERE c.id = :id")
+    void deleteById(Long id);
 }
 
 

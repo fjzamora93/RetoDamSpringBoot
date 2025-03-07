@@ -51,7 +51,7 @@ public class CharacterController {
     // Endpoint para eliminar un personaje por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCharacter(@PathVariable Long id) {
-        characterService.deleteCharacter(id);
+        characterService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

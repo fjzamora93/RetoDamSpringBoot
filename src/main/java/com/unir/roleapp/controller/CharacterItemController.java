@@ -27,9 +27,9 @@ public class CharacterItemController {
 
     @PostMapping()
     public ResponseEntity<CharacterItemDTO> addOrUpdateItemToCharacter(
-            @RequestParam(required = true) Long characterId,
+            @RequestParam() Long characterId,
             @RequestBody CustomItemDTO customItemDTO,
-            @RequestParam(required = true) int quantity){
+            @RequestParam() int quantity){
         CharacterItemDTO item = characterItemService.addOrUpdateItemToCharacter(characterId, customItemDTO, quantity);
         return ResponseEntity.ok(item);
     }

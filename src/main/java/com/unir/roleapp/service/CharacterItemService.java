@@ -37,6 +37,8 @@ public class CharacterItemService {
     public void deleteItemFromCharacter(Long characterId, Long itemId) {
         characterItemRepository.deleteByCharacterIdAndItemId(characterId, itemId);
     }
+
+
     public CharacterItemDTO addOrUpdateItemToCharacter(
             Long characterId,
             CustomItemDTO customItemDTO,
@@ -60,6 +62,9 @@ public class CharacterItemService {
         // Buscar el personaje (evitar crear instancias no administradas por JPA)
         CharacterEntity characterEntity = characterRepository.findById(characterId)
                 .orElseThrow(() -> new EntityNotFoundException("Character not found"));
+
+        characterEntity.setGold(characterEntity.getGold() - customItemDTO.getGoldValue());
+        characterRepository.save(characterEntity);
 
         // Buscar si ya existe una relación entre el personaje y el CustomItem
         CharacterItem characterItem = characterItemRepository

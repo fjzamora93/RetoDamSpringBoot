@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 @Entity
 @Table(name = "character_entity")
@@ -56,14 +57,6 @@ public class CharacterEntity {
     @JoinColumn(name = "id_roleclass")
     private RoleClass roleClass;
 
-    //UNIDIRECCIONAL
-    @ManyToMany( cascade= CascadeType.ALL, fetch = FetchType.EAGER )
-    @JoinTable(
-            name = "character_item",
-            joinColumns = @JoinColumn( name = "id_character" ),
-            inverseJoinColumns = @JoinColumn( name = "id_item" )
-    )
-    private List<CustomItem> customItems = new ArrayList<>();
 
 
     // UNIDIRECCIONAL
