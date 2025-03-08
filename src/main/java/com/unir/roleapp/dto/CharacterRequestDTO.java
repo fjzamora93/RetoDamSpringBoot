@@ -15,6 +15,9 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 public class CharacterRequestDTO {
     private Long id; // VERIFICA QUE EL ID ES NULL AL CREAR UN PERSONAJE. SI ES NULO, SE CREA, SI NO ES NULO, SE TIENE QUE HACER UN UPDATE.
+    private Long updatedAt;
+
+
     private String name;
     private String description;
     private Race race;
@@ -34,14 +37,15 @@ public class CharacterRequestDTO {
     private Long userId;
     private String roleClass;
 
-    @NotNull
     private Long gameSessionId;
 
     public CharacterRequestDTO(
+           Long updatedAt,
             String name, String description, Race race, Gender gender, int size, int age, int gold,
             int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
             String imgUrl, Long userId, String roleClass)
     {
+        this.updatedAt = updatedAt;
         this.name = name;
         this.description = description;
         this.race = race;

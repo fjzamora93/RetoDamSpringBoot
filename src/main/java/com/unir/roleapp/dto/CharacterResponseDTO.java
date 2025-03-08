@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CharacterResponseDTO {
     private Long id;
+    private Long updatedAt;
     private String name;
     private String description;
     private Race race;

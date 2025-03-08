@@ -22,8 +22,11 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 public class CharacterEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name = "updated_at", nullable = false)
+    private Long updatedAt;
 
     @Column(name = "name")  private String name;
     @Column(name = "description")  private String description;
@@ -73,5 +76,9 @@ public class CharacterEntity {
     @JoinColumn(name = "id_game_session")
     @JsonBackReference("character-session")
     private GameSession gameSession;
+
+    @Version
+    @Column(name = "version")
+    private Long version = 0L;
 
 }
