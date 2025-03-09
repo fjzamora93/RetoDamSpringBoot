@@ -27,7 +27,6 @@ public class EntityToDtoMapper {
                     // Ignorar campos que se asignarán manualmente
                     mapper.skip(CharacterResponseDTO::setRoleClass);
                     mapper.skip(CharacterResponseDTO::setItems);
-                    mapper.skip(CharacterResponseDTO::setSkills);
                 });
 
         // Configurar mapeo de CharacterRequestDTO a CharacterEntity (existente)
@@ -36,6 +35,7 @@ public class EntityToDtoMapper {
                     mapper.skip(CharacterEntity::setGameSession);
                     mapper.skip(CharacterEntity::setRoleClass);
                     mapper.skip(CharacterEntity::setUser);
+                    mapper.skip(CharacterEntity::setSkills);
                 });
     }
 

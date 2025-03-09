@@ -19,14 +19,14 @@ public class Skill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "name") private String name;
     @Column(name = "description") private String description;
 
     @ManyToMany(
             mappedBy = "skills",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.MERGE,
             fetch = FetchType.EAGER
     )
     @JsonIgnore

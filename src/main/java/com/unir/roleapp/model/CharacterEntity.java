@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDeleteAction;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
@@ -38,6 +39,7 @@ public class CharacterEntity {
     @Column(name = "gender") private Gender gender;
 
     @Column(name = "size") private int size;
+    @Column(name = "level") private int level;
     @Column(name = "age") private int age;
     @Column(name = "gold") private int gold;
     @Column(name = "strength") private int strength;
@@ -63,13 +65,13 @@ public class CharacterEntity {
 
 
     // UNIDIRECCIONAL
-    @ManyToMany( cascade= CascadeType.ALL, fetch = FetchType.EAGER )
+    @ManyToMany( cascade= CascadeType.MERGE, fetch = FetchType.EAGER )
     @JoinTable(
             name = "character_skill",
             joinColumns = @JoinColumn( name = "id_character" ),
             inverseJoinColumns = @JoinColumn( name = "id_skill" )
     )
-    private List<Skill> skills = new ArrayList<>();
+    private List<Skill> skills;
 
 
     @ManyToOne

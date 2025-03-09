@@ -19,6 +19,8 @@ public class CharacterResponseDTO {
     private String description;
     private Race race;
     private Gender gender;
+    private int level;
+
     private int size;
     private int age;
     private int gold;

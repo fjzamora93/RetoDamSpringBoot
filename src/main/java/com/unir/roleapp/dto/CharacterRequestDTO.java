@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -22,6 +25,7 @@ public class CharacterRequestDTO {
     private String description;
     private Race race;
     private Gender gender;
+    private int level;
     private int size;
     private int age;
     private int gold;
@@ -36,12 +40,11 @@ public class CharacterRequestDTO {
     // RELACIONES
     private Long userId;
     private String roleClass;
-
     private Long gameSessionId;
 
     public CharacterRequestDTO(
            Long updatedAt,
-            String name, String description, Race race, Gender gender, int size, int age, int gold,
+            String name, String description, Race race, Gender gender, int size, int level, int age, int gold,
             int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
             String imgUrl, Long userId, String roleClass)
     {
@@ -50,6 +53,7 @@ public class CharacterRequestDTO {
         this.description = description;
         this.race = race;
         this.gender = gender;
+        this.level = level;
         this.size = size;
         this.age = age;
         this.gold = gold;

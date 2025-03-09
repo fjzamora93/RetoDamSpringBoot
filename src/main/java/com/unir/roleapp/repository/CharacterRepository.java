@@ -2,9 +2,12 @@ package com.unir.roleapp.repository;
 
 import com.unir.roleapp.model.CharacterEntity;
 import com.unir.roleapp.model.User;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -28,6 +31,10 @@ public interface CharacterRepository extends JpaRepository<CharacterEntity, Long
 
     // BÚSQUEDA PERSONALIZADA QUE DEUVVLEVE UNA LISTA
     List<CharacterEntity> findByUser_Id(Long userId);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT c FROM CharacterEntity c WHERE c.id = :id")
+    Optional<CharacterEntity> findByIdWithLock(@Param("id") Long id);
 
     // BÚSQUEDA PERSONALIZADA QUE DEVUELVE UN RESUTLADO
     Optional<CharacterEntity> findByName(String name);

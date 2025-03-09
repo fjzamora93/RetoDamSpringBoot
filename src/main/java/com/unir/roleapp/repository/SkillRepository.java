@@ -1,6 +1,9 @@
 package com.unir.roleapp.repository;
+import com.unir.roleapp.model.CharacterEntity;
 import com.unir.roleapp.model.Skill;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +19,15 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
             "(?1, ?2), (?1, ?3), (?1, ?4)", nativeQuery = true)
     void addDefaultSKills(Long characterId, Long skillId1, Long skillId2, Long skillId3);
 
-
+    @Lock(LockModeType.PESSIMISTIC_READ)
     @Query("SELECT s FROM Skill s JOIN s.characters c WHERE c.id = :characterId")
     List<Skill> findByCharacterId(@Param("characterId") Long characterId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM character_skill WHERE id_character = :characterId", nativeQuery = true)
+    void deleteCharacterSkills(@Param("characterId") Long characterId);
+
+
+
 }

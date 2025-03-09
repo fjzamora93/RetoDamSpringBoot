@@ -12,8 +12,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,40 +77,36 @@ public class CharacterService {
 
 
     /** CREA UN NUEVO PERSONAJE O SI EN EL REQUEST SE INCLUYE EL ID ACTUALIZA UNO YA EXISTENTE */
+    @Transactional
     public CharacterResponseDTO saveOrUpdateCharacter(CharacterRequestDTO characterDto) {
-        System.out.println("Guardando/actualizando personaje...");
+        // Recuperar la entidad dentro de la transacción
+        CharacterEntity characterEntity = characterRepository.findByIdWithLock(characterDto.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "PERSONAJE NO ENCONTRADO"));
 
-        // Mapear campos básicos del DTO a la entidad (ignorando gameSession, roleClass y user)
-        CharacterEntity characterEntity = modelMapper.map(characterDto, CharacterEntity.class);
+        modelMapper.map(characterDto, characterEntity);
 
-        System.out.println("characterEntity ___________________= " + characterEntity.toString());
-
-        // Asignar campos complejos MANUALMENTE
         // 1. RoleClass
         RoleClass roleClass = roleClassRepository.findByName(characterDto.getRoleClass())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ROLCLASS NOT FOUND"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ROLCLASS NO ENCONTRADO"));
         characterEntity.setRoleClass(roleClass);
 
         // 2. GameSession
         GameSession gameSession = gameSessionRepository.findById(characterDto.getGameSessionId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "GAMESESSION NOT FOUND"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "GAMESESSION NO ENCONTRADO"));
         characterEntity.setGameSession(gameSession);
 
         // 3. User
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NOT FOUND"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USUARIO NO ENCONTRADO"));
         characterEntity.setUser(user);
-
-        // Guardar la entidad
         CharacterEntity savedCharacter = characterRepository.save(characterEntity);
 
-        System.out.println("GUARDAAAAAAAAAAAAAADOOOOO ___________________= " + savedCharacter);
+        System.out.println("Personaje guardado/actualizado: " + savedCharacter);
 
         return entityToDtoMapper.mapToCharacterResponseDTO(savedCharacter);
     }
-
 
 
 

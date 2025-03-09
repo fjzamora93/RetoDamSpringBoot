@@ -34,10 +34,9 @@ public class SkillController {
     @PostMapping("/addDefault/{characterId}")
     public ResponseEntity<List<SkillDTO>> addDefaultSkills(
             @PathVariable Long characterId,
-            @RequestBody List<Long> skillIds) {
-
+            @RequestBody List<Long> skillIds
+    ) {
         List<SkillDTO> addedSkills = skillService.addDefaultSkills(characterId, skillIds);
-
         if (addedSkills.isEmpty()) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

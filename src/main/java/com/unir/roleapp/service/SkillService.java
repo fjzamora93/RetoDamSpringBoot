@@ -47,8 +47,10 @@ public class SkillService {
     /**Añadir set de skills por defecto.*/
     @Transactional
     public List<SkillDTO> addDefaultSkills(Long characterId, List<Long> skillIds) {
-        if (skillIds.size() != 3) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Se requieren exactamente 3 habilidades.");
+        if (skillIds.size() < 3) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Se requieren al menos 3 habilidades.");
 
+
+        skillRepository.deleteCharacterSkills(characterId);
         skillRepository.addDefaultSKills(characterId, skillIds.get(0), skillIds.get(1), skillIds.get(2));
         List<Skill> skills = skillRepository.findAllById(skillIds);
         return skills.stream()
