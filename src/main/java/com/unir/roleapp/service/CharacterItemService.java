@@ -4,15 +4,14 @@ import com.unir.roleapp.dto.CharacterItemDTO;
 import com.unir.roleapp.dto.CustomItemDTO;
 import com.unir.roleapp.model.*;
 import com.unir.roleapp.repository.CharacterItemRepository;
-import com.unir.roleapp.repository.CharacterRepository;
-import com.unir.roleapp.repository.CustomItemRepository;
-import com.unir.roleapp.repository.GameSessionRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,9 +20,7 @@ public class CharacterItemService {
 
     // Inyección del repositorio
     @Autowired private  CharacterItemRepository characterItemRepository;
-    @Autowired private  CustomItemRepository customItemRepository;
-    @Autowired private GameSessionRepository gameSessionRepository;
-    @Autowired private CharacterRepository characterRepository;
+
 
     // Método para obtener todos los items de un personaje
     public List<CharacterItemDTO> getCustomItemsByCharacter(Long characterId) {
@@ -33,50 +30,73 @@ public class CharacterItemService {
                 .collect(Collectors.toList());
     }
 
-    // Método para eliminar un item de un personaje
-    public void deleteItemFromCharacter(Long characterId, Long itemId) {
-        characterItemRepository.deleteByCharacterIdAndItemId(characterId, itemId);
-    }
 
 
-    public CharacterItemDTO addOrUpdateItemToCharacter(
-            Long characterId,
-            CustomItemDTO customItemDTO,
-            int quantity
+    @Transactional
+    public List<CharacterItemDTO> upsertItemsToCharacter(
+            List<CharacterItemDTO> incomingItems
     ) {
-        // Buscar la sesión de juego asociada al personaje
+        List<CharacterItemDTO> result = new ArrayList<>();
+        Long characterId = incomingItems.get(0).getCharacterId();
 
-        GameSession gameSession = gameSessionRepository
-                .findByCharacterId(characterId)
-                .orElseThrow(() -> new EntityNotFoundException("Game Session not found"));
+        for (CharacterItemDTO incomingItem : incomingItems) {
 
-        // Buscar si el CustomItem ya existe (si tiene ID)
-        CustomItem customItem;
-        if (customItemDTO.getId() != null) {
-            customItem = customItemRepository.findById(customItemDTO.getId())
-                    .orElseGet(() -> customItemRepository.save(CustomItem.fromDTO(customItemDTO, gameSession)));
-        } else {
-            customItem = customItemRepository.save(CustomItem.fromDTO(customItemDTO, gameSession));
+            // 1. Buscar el ítem existente en la base de datos
+            Long itemId = incomingItem.getCustomItem().getId();
+            Optional<CharacterItem> existingItemOpt = characterItemRepository
+                    .findByCharacterIdAndCustomItemId(characterId, itemId);
+
+            // 2. Comparar los valores de updatedAt (Long)
+
+            if (existingItemOpt.isPresent()) {
+                CharacterItem existingItem = existingItemOpt.get();
+
+                if (incomingItem.getUpdatedAt() > existingItem.getUpdatedAt()) {
+                    if (incomingItem.getQuantity() <= 0) {
+                        characterItemRepository.deleteByCharacterIdAndItemId(characterId, itemId);
+                        System.out.println("NÚMERO NEGATIVOS DE OBJETOSSS, BORRAAAAAAANDOOOOOO");
+
+                    } else {
+                        System.out.println("NÚMERO POSITIVO INSERTANDO");
+
+                        characterItemRepository.upsertCharacterItem(
+                                characterId,
+                                itemId,
+                                incomingItem.getQuantity(),
+                                incomingItem.getUpdatedAt()
+                        );
+                    }
+                    result.add(incomingItem);
+                } else {
+                    result.add(CharacterItemDTO.toDTO(existingItem));
+                }
+            } else {
+                // El ítem no existe en la base de datos: insertarlo
+                if (incomingItem.getQuantity() >= 0) {
+                    characterItemRepository.upsertCharacterItem(
+                            characterId,
+                            itemId,
+                            incomingItem.getQuantity(),
+                            incomingItem.getUpdatedAt()
+                    );
+                    result.add(incomingItem);
+                } else {
+                    System.out.println("NÚMERO NEGATIVO DETECTADO, NO INSERTANDO");
+                }
+
+            }
         }
 
-        // Buscar el personaje (evitar crear instancias no administradas por JPA)
-        CharacterEntity characterEntity = characterRepository.findById(characterId)
-                .orElseThrow(() -> new EntityNotFoundException("Character not found"));
-
-        characterEntity.setGold(characterEntity.getGold() - customItemDTO.getGoldValue());
-        characterRepository.save(characterEntity);
-
-        // Buscar si ya existe una relación entre el personaje y el CustomItem
-        CharacterItem characterItem = characterItemRepository
-                .findByCharacterIdAndCustomItemId(characterId, customItem.getId())
-                .orElseGet(() -> new CharacterItem(
-                        new CharacterItemId(characterId, customItem.getId()),
-                        quantity,
-                        characterEntity,
-                        customItem
-                ));
-
-        return CharacterItemDTO.toDTO(characterItemRepository.save(characterItem));
+        return result;
     }
+
+
+    // Método para eliminar un item de un personaje
+    public void  deleteItemFromCharacter(Long characterId, Long itemId) {
+        characterItemRepository.deleteByCharacterIdAndItemId(characterId, itemId);
+
+    }
+
+
 
 }

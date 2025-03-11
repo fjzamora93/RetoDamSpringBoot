@@ -25,13 +25,12 @@ public class CharacterItemController {
         return ResponseEntity.ok(items);
     }
 
-    @PostMapping()
-    public ResponseEntity<CharacterItemDTO> addOrUpdateItemToCharacter(
-            @RequestParam() Long characterId,
-            @RequestBody CustomItemDTO customItemDTO,
-            @RequestParam() int quantity){
-        CharacterItemDTO item = characterItemService.addOrUpdateItemToCharacter(characterId, customItemDTO, quantity);
-        return ResponseEntity.ok(item);
+    @PutMapping("/sync")
+    public ResponseEntity<List<CharacterItemDTO>>  addOrUpdateItemToCharacter(
+            @RequestBody List <CharacterItemDTO> characterItemsDetail
+      ){
+        List<CharacterItemDTO> updatedRelationItemCharacter = characterItemService.upsertItemsToCharacter(characterItemsDetail);
+        return ResponseEntity.ok(updatedRelationItemCharacter);
     }
 
 

@@ -19,6 +19,7 @@ public class CharacterItem {
     private CharacterItemId id;
 
     @Column(name = "quantity") private int quantity;
+    @Column(name = "updated_at") private Long updatedAt;
 
     @ManyToOne
     @MapsId("characterId")

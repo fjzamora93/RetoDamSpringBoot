@@ -69,7 +69,7 @@ public class CustomItem {
                 this.dice,
                 this.statType,
                 this.statValue,
-                this.gameSession != null ? this.gameSession.getId() : null
+                this.gameSession != null ? this.gameSession.getId() : 0
         );
     }
 

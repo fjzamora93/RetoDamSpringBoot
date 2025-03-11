@@ -20,15 +20,36 @@ public interface CharacterItemRepository extends JpaRepository<CharacterItem, Ch
     @Query("SELECT ci FROM CharacterItem ci WHERE ci.character.id = :characterId")
     List<CharacterItem> findByCharacterId(@Param("characterId") Long characterId);
 
+    // Buscar un ítem específico por characterId y itemId
     @Query("SELECT ci FROM CharacterItem ci WHERE ci.character.id = :characterId AND ci.customItem.id = :customItemId")
-    Optional<CharacterItem> findByCharacterIdAndCustomItemId(@Param("characterId") Long characterId, @Param("customItemId") Long customItemId);
+    Optional<CharacterItem> findByCharacterIdAndCustomItemId(
+            @Param("characterId") Long characterId,
+            @Param("customItemId") Long customItemId
+    );
 
-
-    // Eliminar un item de un personaje por IDs
+    // Eliminar un ítem por characterId y itemId
     @Modifying
     @Transactional
     @Query("DELETE FROM CharacterItem ci WHERE ci.character.id = :characterId AND ci.customItem.id = :itemId")
-    void deleteByCharacterIdAndItemId(@Param("characterId") Long characterId, @Param("itemId") Long itemId);
+    void deleteByCharacterIdAndItemId(
+            @Param("characterId") Long characterId,
+            @Param("itemId") Long itemId
+    );
 
-
+    // Upsert un ítem (insertar o actualizar) con updatedAt
+    @Modifying
+    @Transactional
+    @Query(
+            value = "INSERT INTO character_item (id_character, id_item, quantity, updated_at) " +
+                    "VALUES (:characterId, :itemId, :quantity, :updatedAt) " +
+                    "ON CONFLICT (id_character, id_item) DO UPDATE SET " +
+                    "quantity = :quantity, updated_at = :updatedAt",
+            nativeQuery = true
+    )
+    void upsertCharacterItem(
+            @Param("characterId") Long characterId,
+            @Param("itemId") Long itemId,
+            @Param("quantity") int quantity,
+            @Param("updatedAt") Long updatedAt
+    );
 }
