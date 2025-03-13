@@ -1,19 +1,17 @@
 package com.unir.roleapp.model;
-import java.util.ArrayList;
 import java.util.List;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.unir.auth.model.User;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
+import com.unir.session.model.GameSession;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDeleteAction;
-import org.jetbrains.annotations.NotNull;
 
 @Entity
 @Table(name = "character_entity")

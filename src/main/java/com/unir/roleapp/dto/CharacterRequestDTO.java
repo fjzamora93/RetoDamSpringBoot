@@ -1,15 +1,10 @@
 package com.unir.roleapp.dto;
-import com.unir.roleapp.model.GameSession;
 import com.unir.roleapp.enumm.Gender;
 import com.unir.roleapp.enumm.Race;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Getter

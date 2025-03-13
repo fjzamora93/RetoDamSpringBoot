@@ -1,9 +1,13 @@
 package com.unir.roleapp.service;
 
+import com.unir.auth.model.User;
+import com.unir.auth.repository.UserRepository;
 import com.unir.roleapp.dto.*;
 import com.unir.roleapp.model.*;
 import com.unir.roleapp.repository.*;
 import com.unir.roleapp.mapper.EntityToDtoMapper;
+import com.unir.session.model.GameSession;
+import com.unir.session.repository.GameSessionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

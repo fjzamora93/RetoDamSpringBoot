@@ -1,7 +1,6 @@
 package com.unir.roleapp.repository;
 
 import com.unir.roleapp.model.CharacterEntity;
-import com.unir.roleapp.model.User;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

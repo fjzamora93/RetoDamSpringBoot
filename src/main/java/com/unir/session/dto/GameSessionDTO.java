@@ -1,4 +1,4 @@
-package com.unir.roleapp.dto;
+package com.unir.session.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,6 @@
-package com.unir.roleapp.security;
+package com.unir.auth.security;
 
-import com.unir.roleapp.dto.UserDTO;
-import com.unir.roleapp.service.UserService;
+import com.unir.auth.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

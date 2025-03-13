@@ -1,6 +1,6 @@
-package com.unir.roleapp.controller;
-import com.unir.roleapp.dto.UserDTO;
-import com.unir.roleapp.service.UserService;
+package com.unir.auth.controller;
+import com.unir.auth.dto.UserDTO;
+import com.unir.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,11 +1,11 @@
-package com.unir.roleapp.controller;
+package com.unir.auth.controller;
 
 import com.unir.roleapp.dto.RefreshTokenRequest;
-import com.unir.roleapp.security.JwtTokenProvider;
+import com.unir.auth.security.JwtTokenProvider;
 import com.unir.roleapp.dto.LoginRequest;
 import com.unir.roleapp.dto.LoginResponse;
-import com.unir.roleapp.dto.UserDTO;
-import com.unir.roleapp.service.UserService;
+import com.unir.auth.dto.UserDTO;
+import com.unir.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,8 @@
 package com.unir.roleapp.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.unir.roleapp.dto.CustomItemDTO;
 import com.unir.roleapp.enumm.ItemCategory;
 import com.unir.roleapp.enumm.StatType;
+import com.unir.session.model.GameSession;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

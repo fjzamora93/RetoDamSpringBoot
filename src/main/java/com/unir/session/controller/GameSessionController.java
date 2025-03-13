@@ -1,8 +1,8 @@
-package com.unir.roleapp.controller;
+package com.unir.session.controller;
 import com.unir.roleapp.dto.CharacterResponseDTO;
 import com.unir.roleapp.dto.CustomItemDTO;
-import com.unir.roleapp.dto.GameSessionDTO;
-import com.unir.roleapp.service.GameSessionService;
+import com.unir.session.dto.GameSessionDTO;
+import com.unir.session.service.GameSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

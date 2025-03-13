@@ -1,4 +1,4 @@
-package com.unir.roleapp.security;
+package com.unir.auth.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

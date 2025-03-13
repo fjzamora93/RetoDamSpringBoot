@@ -1,5 +1,6 @@
-package com.unir.roleapp.dto;
-import jakarta.persistence.*;
+package com.unir.auth.dto;
+import com.unir.roleapp.dto.CharacterResponseDTO;
+import com.unir.session.dto.GameSessionDTO;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;

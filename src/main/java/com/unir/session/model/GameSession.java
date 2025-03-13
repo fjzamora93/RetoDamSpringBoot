@@ -1,7 +1,10 @@
-package com.unir.roleapp.model;
+package com.unir.session.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.unir.auth.model.User;
+import com.unir.roleapp.model.CharacterEntity;
+import com.unir.roleapp.model.CustomItem;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,12 +1,14 @@
-package com.unir.roleapp.repository;
-import com.unir.roleapp.model.GameSession;
+package com.unir.session.repository;
+import com.unir.session.model.GameSession;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface GameSessionRepository extends JpaRepository<GameSession, Long> {
 
     List<GameSession> findByUserId(Long userId);

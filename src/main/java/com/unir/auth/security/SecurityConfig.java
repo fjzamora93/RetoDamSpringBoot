@@ -1,4 +1,4 @@
-package com.unir.roleapp.security;
+package com.unir.auth.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
