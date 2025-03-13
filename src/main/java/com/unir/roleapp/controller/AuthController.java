@@ -1,5 +1,6 @@
 package com.unir.roleapp.controller;
 
+import com.unir.roleapp.dto.RefreshTokenRequest;
 import com.unir.roleapp.security.JwtTokenProvider;
 import com.unir.roleapp.dto.LoginRequest;
 import com.unir.roleapp.dto.LoginResponse;
@@ -12,10 +13,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -42,13 +46,18 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
             );
 
-            // Generar token JWT
-            String token = jwtTokenProvider.createToken(authentication.getName());
-            return ResponseEntity.ok(new LoginResponse(
-                    token,
-                    userService.getUserByEmail(loginRequest.getEmail()),
-                    jwtTokenProvider.getExpirationDateFromToken(token))
-            );
+            // Generar tokens
+            String accessToken = jwtTokenProvider.createAccessToken(authentication.getName());
+            String refreshToken = jwtTokenProvider.createRefreshToken(authentication.getName());
+            Date expiration = jwtTokenProvider.getExpirationDateFromToken(accessToken);
+
+            // Obtener detalles del usuario
+            UserDetails user = userService.getUserByEmail(loginRequest.getEmail());
+
+            // Crear respuesta
+            LoginResponse loginResponse = new LoginResponse(accessToken, refreshToken, user, expiration);
+
+            return ResponseEntity.ok(loginResponse);
 
         } catch (BadCredentialsException e) {
             // Credenciales inválidas
@@ -56,6 +65,37 @@ public class AuthController {
                     .body(new LoginResponse("Credenciales inválidas"));
         }
     }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<LoginResponse> refreshToken(
+            @RequestBody RefreshTokenRequest refreshTokenRequest
+    ) {
+        try {
+            String refreshToken = refreshTokenRequest.getRefreshToken();
+
+            // Validar el refresh token
+            if (jwtTokenProvider.validateToken(refreshToken)) {
+                String email = jwtTokenProvider.getEmailFromToken(refreshToken);
+                UserDetails user = userService.getUserByEmail(email);
+
+                // Generar un nuevo access token
+                String newAccessToken = jwtTokenProvider.createAccessToken(email);
+                Date expiration = jwtTokenProvider.getExpirationDateFromToken(newAccessToken);
+
+                // Crear respuesta
+                LoginResponse loginResponse = new LoginResponse(newAccessToken, refreshToken, user, expiration);
+
+                return ResponseEntity.ok(loginResponse);
+            } else {
+                throw new RuntimeException("Refresh token inválido o expirado");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new LoginResponse("Error al refrescar el token: " + e.getMessage()));
+        }
+    }
+
+
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody UserDTO newUser) {
