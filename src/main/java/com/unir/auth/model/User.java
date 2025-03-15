@@ -2,7 +2,7 @@ package com.unir.auth.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unir.auth.dto.UserDTO;
-import com.unir.roleapp.model.CharacterEntity;
+import com.unir.character.model.CharacterEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

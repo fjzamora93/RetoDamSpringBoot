@@ -1,9 +1,9 @@
 package com.unir.auth.controller;
 
-import com.unir.roleapp.dto.RefreshTokenRequest;
+import com.unir.auth.dto.RefreshTokenRequest;
 import com.unir.auth.security.JwtTokenProvider;
-import com.unir.roleapp.dto.LoginRequest;
-import com.unir.roleapp.dto.LoginResponse;
+import com.unir.character.dto.LoginRequest;
+import com.unir.character.dto.LoginResponse;
 import com.unir.auth.dto.UserDTO;
 import com.unir.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +66,22 @@ public class AuthController {
         }
     }
 
+    // TODO: IMplementar el Doble Factor  al registrase (o mandar un email o algo)
+    // TODO: Mejorar el Sign UP para que haga un autologin (coordinarlo con el Front)
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody UserDTO newUser) {
+        try {
+            userService.save(newUser);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Usuario registrado exitosamente");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al registrar el usuario: " + e.getMessage());
+        }
+    }
+
+
     @PostMapping("/refresh-token")
     public ResponseEntity<LoginResponse> refreshToken(
             @RequestBody RefreshTokenRequest refreshTokenRequest
@@ -96,19 +112,23 @@ public class AuthController {
     }
 
 
-
-    @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserDTO newUser) {
-        try {
-            userService.save(newUser);
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Usuario registrado exitosamente");
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al registrar el usuario: " + e.getMessage());
-        }
+    /** TODO: Aunque el AccessToken caduque por sí mismo al cabo de unos minutos, el Refresh Token hay que "invalidarlo" en el backend.
+     *
+     * Si un atacante consigue el RefreshToken, podría usarlo para obtener infinitos AccessToken, así que hay que reforzar la seguridad.
+     *
+     * Para "invalidar" el Refresh Token hay varias propuestas. Ya que no se puede revocar, las opciones serían estas:
+     * - LIsta NEgra de REfresh Token (SIN IMPLEMENTAR)
+     * - DUración corta de Access TOken (hecho, pero se puede revisar los tiempos).
+     * - Cambiar el Refresh TOken automáticamente cada vez que cambie el Access TOken (esto ya se está haciendo).
+     *
+     * */
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logoutUser() {
+        System.out.println("EL usuario se fue");
+        return ResponseEntity.ok().build();
     }
+
+
 
 
 }

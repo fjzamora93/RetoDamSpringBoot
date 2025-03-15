@@ -43,11 +43,6 @@ public class UserController {
     }
 
 
-    /** PARA EL LOG OUT ES SUFICIENTE CON QUE EL FRONT ELIMINE EL TOKEN, NO ES NECESARIO HACER NADA EN EL BACKEND, EL TOKEN EXPIARÁ POR SÍ MISMO EN 24 HORAS*/
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logoutUser() {
-        return ResponseEntity.ok().build();
-    }
 
 
     /** Método auxiliar para obtener el usuario autenticado desde JWT */
