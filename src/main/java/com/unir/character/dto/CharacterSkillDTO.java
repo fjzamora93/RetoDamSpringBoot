@@ -10,9 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CharacterSkillDTO {
-    private Long idSkill;
-    private String name;
-    private String description;
+    private SkillDTO skill;
     private int value;
-
 }

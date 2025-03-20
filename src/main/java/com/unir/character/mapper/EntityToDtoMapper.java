@@ -56,9 +56,7 @@ public class EntityToDtoMapper {
 
     private CharacterSkillDTO mapCharacterSkillToDTO(CharacterSkill characterSkill) {
         CharacterSkillDTO dto = new CharacterSkillDTO();
-        dto.setIdSkill(characterSkill.getSkill().getId());
-        dto.setName(characterSkill.getSkill().getName());
-        dto.setDescription(characterSkill.getSkill().getDescription());
+        dto.setSkill(characterSkill.getSkill().toSkillDTO());
         dto.setValue(characterSkill.getValue());
         return dto;
     }

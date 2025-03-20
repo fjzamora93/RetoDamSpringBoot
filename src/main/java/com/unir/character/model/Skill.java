@@ -1,6 +1,7 @@
 package com.unir.character.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.unir.character.dto.SkillDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -27,4 +28,9 @@ public class Skill {
     @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<CharacterSkill> characterSkills;
+
+
+    public SkillDTO toSkillDTO() {
+        return new SkillDTO(this.id, this.name, this.description);
+    }
 }
