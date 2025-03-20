@@ -28,6 +28,7 @@ public class ItemTemplate {
     @Enumerated(EnumType.STRING)
     @Column(name = "category") private ItemCategory category;
     @Column(name = "dice") private int dice;
+    @Column(name = "dices_amount") private int dicesAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(name= "modifiedstat") private StatType statType;

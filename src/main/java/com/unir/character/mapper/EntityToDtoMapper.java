@@ -27,6 +27,7 @@ public class EntityToDtoMapper {
                     // Ignorar campos que se asignarán manualmente
                     mapper.skip(CharacterResponseDTO::setRoleClass);
                     mapper.skip(CharacterResponseDTO::setItems);
+                    mapper.skip(CharacterResponseDTO::setSkills);
                 });
 
         // Configurar mapeo de CharacterRequestDTO a CharacterEntity (existente)
@@ -35,7 +36,7 @@ public class EntityToDtoMapper {
                     mapper.skip(CharacterEntity::setGameSession);
                     mapper.skip(CharacterEntity::setRoleClass);
                     mapper.skip(CharacterEntity::setUser);
-                    mapper.skip(CharacterEntity::setSkills);
+                    mapper.skip(CharacterEntity::setCharacterSkills);
                 });
     }
 
@@ -45,10 +46,20 @@ public class EntityToDtoMapper {
         // Asignaciones manuales SOLO para campos complejos
         dto.setRoleClass(mapRoleClassToDTO(characterEntity.getRoleClass()));
 
-        dto.setSkills(characterEntity.getSkills().stream()
-                .map(this::mapSkillToDTO)
+        // Mapear characterSkills a CharacterSkillDTO
+        dto.setSkills(characterEntity.getCharacterSkills().stream()
+                .map(this::mapCharacterSkillToDTO)
                 .collect(Collectors.toList()));
 
+        return dto;
+    }
+
+    private CharacterSkillDTO mapCharacterSkillToDTO(CharacterSkill characterSkill) {
+        CharacterSkillDTO dto = new CharacterSkillDTO();
+        dto.setIdSkill(characterSkill.getSkill().getId());
+        dto.setName(characterSkill.getSkill().getName());
+        dto.setDescription(characterSkill.getSkill().getDescription());
+        dto.setValue(characterSkill.getValue());
         return dto;
     }
 
@@ -59,30 +70,17 @@ public class EntityToDtoMapper {
         return dto;
     }
 
-    private CustomItemDTO mapItemToDTO(CustomItem customItem) {
-        return new CustomItemDTO(
-                customItem.getId(), customItem.getName(), customItem.getDescription(),
-                customItem.getImgUrl(), customItem.getGoldValue(), customItem.getCategory(), customItem.getDice(),
-                customItem.getStatType(), customItem.getStatValue(), customItem.getGameSession().getId()
-        );
-    }
-
-    private SkillDTO mapSkillToDTO(Skill skill) {
-        return new SkillDTO(skill.getId(), skill.getName(), skill.getDescription());
-    }
-
-
 
     public SpellDTO mapSpellWithClassToDTO(Spell spell, List<String> className) {
         return new SpellDTO(spell.getId(), spell.getName(), spell.getDescription(),
-                spell.getDice(), spell.getLevel(), spell.getCost(), spell.getImgUrl(),
+                spell.getDice(), spell.getDicesAmount(), spell.getLevel(), spell.getCost(), spell.getImgUrl(),
                 className
         );
     }
 
     public CustomSpellDTO mapCustomSpellToDTO(CustomSpell spell) {
         return new CustomSpellDTO(spell.getId(), spell.getName(), spell.getDescription(),
-                spell.getDice(), spell.getLevel(), spell.getCost(), spell.getImgUrl(),
+                spell.getDice(), spell.getDicesAmount(), spell.getLevel(), spell.getCost(), spell.getImgUrl(),
                 spell.getCharacter().getId()
         );
     }

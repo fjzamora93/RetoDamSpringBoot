@@ -21,7 +21,7 @@ public class CharacterResponseDTO {
     private Gender gender;
     private int level;
 
-    private int size;
+    private int armor;
     private int age;
     private int gold;
     private int strength;
@@ -36,9 +36,8 @@ public class CharacterResponseDTO {
     private Long gameSessionId;
 
     // En lugar de solo IDs, podrías devolver objetos con más detalles si es necesario (FUERTE ACOPLAMIENTO, ESTÁS LLEVANDO LA ENTITY ENTERA Y NO UN DTO)
-    private Long userId;   // TOMAMOS SOLAMENTE LA ID, NO EL USER COMPLETO
+    private Long userId;
     private RoleClassDTO roleClass;
     private List<CustomItemDTO> items;
-    private List<SkillDTO> skills;
-
+    private List<CharacterSkillDTO> skills;
 }

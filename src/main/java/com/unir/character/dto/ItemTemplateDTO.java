@@ -19,6 +19,7 @@ public class ItemTemplateDTO {
     private int goldValue;
     private ItemCategory category;
     private int dice;
+    private int  dicesAmount;
 
     private StatType statType;
     private int statValue;

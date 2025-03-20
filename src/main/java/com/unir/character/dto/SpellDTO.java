@@ -24,6 +24,8 @@ public class SpellDTO {
     private String name;
     private String description;
     private int dice;
+    private int  dicesAmount;
+
     private int level;
     private int cost;
     private String imgUrl;
@@ -32,12 +34,14 @@ public class SpellDTO {
 
     // Generamos un constructor adicional pero sin la lista de Rol
     public SpellDTO(Long id, String name, String description,
-                    int dice, int level, int cost, String imgUrl
+                    int dice, int dicesAmount, int level, int cost, String imgUrl
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.dice = dice;
+        this.dicesAmount = dicesAmount;
+
         this.level = level;
         this.cost = cost;
         this.imgUrl = imgUrl;

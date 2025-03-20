@@ -34,6 +34,7 @@ public class CharacterService {
     @Autowired private RoleClassRepository roleClassRepository;
     @Autowired private UserRepository userRepository;
     @Autowired private GameSessionRepository gameSessionRepository;
+    @Autowired private SkillRepository skillRepository;
 
 
     /** LISTA COMPLETA DE PERSONAJES
@@ -82,35 +83,54 @@ public class CharacterService {
     /** CREA UN NUEVO PERSONAJE O SI EN EL REQUEST SE INCLUYE EL ID ACTUALIZA UNO YA EXISTENTE */
     @Transactional
     public CharacterResponseDTO saveOrUpdateCharacter(CharacterRequestDTO characterDto) {
-        // Recuperar la entidad dentro de la transacción
-        CharacterEntity characterEntity = characterRepository.findByIdWithLock(characterDto.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "PERSONAJE NO ENCONTRADO"));
+        // 1. Recuperar o crear la entidad CharacterEntity
+        CharacterEntity characterEntity = characterRepository.findById(characterDto.getId())
+                .orElseGet(() -> new CharacterEntity()); // Si no existe, crea una nueva entidad
 
+        // 2. Mapear los campos del DTO a la entidad
         modelMapper.map(characterDto, characterEntity);
 
-        // 1. RoleClass
+        // 3. Asignar RoleClass
         RoleClass roleClass = roleClassRepository.findByName(characterDto.getRoleClass())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ROLCLASS NO ENCONTRADO"));
         characterEntity.setRoleClass(roleClass);
 
-        // 2. GameSession
+        // 4. Asignar GameSession
         GameSession gameSession = gameSessionRepository.findById(characterDto.getGameSessionId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "GAMESESSION NO ENCONTRADO"));
         characterEntity.setGameSession(gameSession);
 
-        // 3. User
+        // 5. Asignar User
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USUARIO NO ENCONTRADO"));
         characterEntity.setUser(user);
-        CharacterEntity savedCharacter = characterRepository.save(characterEntity);
 
-        System.out.println("Personaje guardado/actualizado: " + savedCharacter);
+        // 6. Actualizar las habilidades del personaje
+        if (characterDto.getCharacterSkills() != null && !characterDto.getCharacterSkills().isEmpty()) {
+            // Limpiar las habilidades existentes antes de agregar las nuevas
+            characterEntity.getCharacterSkills().clear();
 
-        return entityToDtoMapper.mapToCharacterResponseDTO(savedCharacter);
+            for (CharacterSkillRequestDTO dto : characterDto.getCharacterSkills()) {
+                // Verificar si el Skill existe
+                Skill skill = skillRepository.findById(dto.getSkillId())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "HABILIDAD NO ENCONTRADA: " + dto.getSkillId()));
+
+                CharacterSkillId id = new CharacterSkillId();
+                id.setIdCharacter(characterEntity.getId());
+                id.setIdSkill(skill.getId());
+
+                // Crear la relación CharacterSkill y agregarla
+                characterEntity.getCharacterSkills().add(new CharacterSkill(id, characterEntity, skill, dto.getValue()));
+            }
+        }
+
+        // 7. Guardar el personaje
+        characterEntity = characterRepository.save(characterEntity);
+
+        // 8. Mapear y devolver el DTO de respuesta
+        return entityToDtoMapper.mapToCharacterResponseDTO(characterEntity);
+
     }
-
-
-
 }

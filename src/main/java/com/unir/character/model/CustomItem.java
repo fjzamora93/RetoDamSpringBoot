@@ -29,6 +29,7 @@ public class CustomItem {
     @Enumerated(EnumType.STRING)
     @Column(name = "category") private ItemCategory category;
     @Column(name = "dice") private int dice;
+    @Column(name = "dices_amount") private int dicesAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(name= "modifiedstat") private StatType statType;
@@ -39,24 +40,7 @@ public class CustomItem {
     @JoinColumn(name = "id_game_session")
     private GameSession gameSession;
 
-    public static CustomItem fromDTO(
-            CustomItemDTO dto,
-            GameSession gameSession
-    ) {
-        CustomItem customItem = new CustomItem();
-        customItem.setId(dto.getId());
-        customItem.setName(dto.getName());
-        customItem.setDescription(dto.getDescription());
-        customItem.setImgUrl(dto.getImgUrl());
-        customItem.setGoldValue(dto.getGoldValue());
-        customItem.setCategory(dto.getCategory());
-        customItem.setDice(dto.getDice());
-        customItem.setStatType(dto.getStatType());
-        customItem.setStatValue(dto.getStatValue());
-        customItem.setGameSession(gameSession);
 
-        return customItem;
-    }
 
     public CustomItemDTO toDTO() {
         return new CustomItemDTO(
@@ -67,6 +51,7 @@ public class CustomItem {
                 this.goldValue,
                 this.category,
                 this.dice,
+                this.dicesAmount,
                 this.statType,
                 this.statValue,
                 this.gameSession != null ? this.gameSession.getId() : 0

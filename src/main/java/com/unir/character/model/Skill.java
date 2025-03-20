@@ -24,11 +24,7 @@ public class Skill {
     @Column(name = "name") private String name;
     @Column(name = "description") private String description;
 
-    @ManyToMany(
-            mappedBy = "skills",
-            cascade = CascadeType.MERGE,
-            fetch = FetchType.EAGER
-    )
+    @OneToMany(mappedBy = "skill", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<CharacterEntity> characters;
+    private List<CharacterSkill> characterSkills;
 }

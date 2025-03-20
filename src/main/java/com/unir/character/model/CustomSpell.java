@@ -21,6 +21,8 @@ public class CustomSpell {
     @Column(name = "name") private String name;
     @Column(name = "description") private String description;
     @Column(name = "dice") private int dice;
+    @Column(name = "dices_amount") private int dicesAmount;
+
     @Column(name = "level") private int level;
     @Column(name = "cost") private int cost;
     @Column(name = "img_url") private String imgUrl;

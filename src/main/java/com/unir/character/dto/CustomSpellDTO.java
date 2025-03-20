@@ -23,6 +23,8 @@ public class CustomSpellDTO {
     private String name;
     private String description;
     private int dice;
+    private int  dicesAmount;
+
     private int level;
     private int cost;
     private String imgUrl;

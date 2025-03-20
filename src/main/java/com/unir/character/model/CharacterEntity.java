@@ -1,4 +1,5 @@
 package com.unir.character.model;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,7 +37,7 @@ public class CharacterEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender") private Gender gender;
 
-    @Column(name = "size") private int size;
+    @Column(name = "armor") private int armor;
     @Column(name = "level") private int level;
     @Column(name = "age") private int age;
     @Column(name = "gold") private int gold;
@@ -63,13 +64,8 @@ public class CharacterEntity {
 
 
     // UNIDIRECCIONAL
-    @ManyToMany( cascade= CascadeType.MERGE, fetch = FetchType.EAGER )
-    @JoinTable(
-            name = "character_skill",
-            joinColumns = @JoinColumn( name = "id_character" ),
-            inverseJoinColumns = @JoinColumn( name = "id_skill" )
-    )
-    private List<Skill> skills;
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<CharacterSkill> characterSkills = new ArrayList<>();
 
 
     @ManyToOne

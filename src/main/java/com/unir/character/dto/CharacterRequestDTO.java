@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -21,7 +23,7 @@ public class CharacterRequestDTO {
     private Race race;
     private Gender gender;
     private int level;
-    private int size;
+    private int armor;
     private int age;
     private int gold;
     private int strength;
@@ -36,12 +38,13 @@ public class CharacterRequestDTO {
     private Long userId;
     private String roleClass;
     private Long gameSessionId;
+    private List<CharacterSkillRequestDTO> characterSkills;
 
     public CharacterRequestDTO(
            Long updatedAt,
-            String name, String description, Race race, Gender gender, int size, int level, int age, int gold,
+            String name, String description, Race race, Gender gender, int armor, int level, int age, int gold,
             int strength, int dexterity, int constitution, int intelligence, int wisdom, int charisma,
-            String imgUrl, Long userId, String roleClass)
+            String imgUrl, Long userId, String roleClass, List<CharacterSkillRequestDTO> characterSkills)
     {
         this.updatedAt = updatedAt;
         this.name = name;
@@ -49,7 +52,7 @@ public class CharacterRequestDTO {
         this.race = race;
         this.gender = gender;
         this.level = level;
-        this.size = size;
+        this.armor = armor;
         this.age = age;
         this.gold = gold;
         this.strength = strength;
@@ -62,5 +65,6 @@ public class CharacterRequestDTO {
         this.userId = userId;
 
         this.roleClass = roleClass;
+        this.characterSkills = characterSkills;
     }
 }
