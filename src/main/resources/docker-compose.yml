@@ -1,6 +1,6 @@
 version: '3.7'
 
-name: spring-boot-task
+name: spring-boot-reto
 
 services:
   db:
