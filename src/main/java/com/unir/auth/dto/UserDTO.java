@@ -1,6 +1,8 @@
 package com.unir.auth.dto;
-import com.unir.character.dto.CharacterResponseDTO;
-import com.unir.adventure.dto.GameSessionDTO;
+import com.unir.auth.enumm.UserRole;
+import com.unir.auth.model.User;
+import com.unir.gestorvacantes.model.Application;
+import com.unir.gestorvacantes.model.UserProfile;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -22,24 +24,25 @@ public class UserDTO implements UserDetails {
 
     private Long id;
     private String name;
+    private String surname;
     private String email;
+
     private String password;
+    private int enabled;
+    private UserRole role;
 
-    // Relación con CharacterEntity (se pasa la lista de characterEntities)
-    private List<CharacterResponseDTO> characterEntities;
-    private List<GameSessionDTO> gameSessions;
 
-    // Constructor sin ID
-    public UserDTO(String name, String email, String password) {
+
+
+    // Constructor sin ID (utilizado en el POST de un nueovo usuario)
+    public UserDTO(String name, String surname, String email, String password) {
         this.name = name;
+        this.surname = surname;
         this.email = email;
         this.password = password;
+        this.enabled = 1;
     }
-    public UserDTO( Long id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -47,7 +50,7 @@ public class UserDTO implements UserDetails {
     }
     @Override
     public String getPassword() {
-        return null;//no se usa en JWT
+        return this.password;
     }
     @Override
     public String getUsername() {
@@ -68,5 +71,31 @@ public class UserDTO implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    public User toJpaEntity() {
+        return  new User(
+                this.id,
+                this.name,
+                this.surname,
+                this.email,
+                this.password,
+                this.enabled,
+                this.role
+        );
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", enabled=" + enabled +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

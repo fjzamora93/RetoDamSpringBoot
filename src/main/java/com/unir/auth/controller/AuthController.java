@@ -2,8 +2,8 @@ package com.unir.auth.controller;
 
 import com.unir.auth.dto.RefreshTokenRequest;
 import com.unir.auth.security.JwtTokenProvider;
-import com.unir.character.dto.LoginRequest;
-import com.unir.character.dto.LoginResponse;
+import com.unir.auth.dto.LoginRequest;
+import com.unir.auth.dto.LoginResponse;
 import com.unir.auth.dto.UserDTO;
 import com.unir.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
