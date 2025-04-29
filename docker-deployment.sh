@@ -18,7 +18,7 @@ echo -e "${green}Compilación exitosa.${reset}"
 
 # Paso 2: Construir la imagen Docker
 echo -e "${green}Construyendo imagen Docker...${reset}"
-if ! docker build -t springbootroleplay .; then
+if ! docker build -t retodam .; then
     echo -e "${red}Error: Fallo en docker build.${reset}"
     exit 1
 fi
@@ -27,13 +27,13 @@ echo -e "${green}Imagen Docker creada con éxito.${reset}"
 
 # Paso 3: Etiquetar la imagen Docker
 echo -e "${green}Etiquetando imagen Docker...${reset}"
-docker tag springbootroleplay fjzamora93/springbootroleplay:latest
+docker tag retodam fjzamora93/retodam:latest
 
 echo -e "${green}Imagen etiquetada correctamente.${reset}"
 
 # Paso 4: Subir la imagen a Docker Hub
 echo -e "${green}Subiendo imagen a Docker Hub...${reset}"
-if ! docker push fjzamora93/springbootroleplay:latest; then
+if ! docker push fjzamora93/retodam:latest; then
     echo -e "${red}Error: Fallo en docker push. Verifica que estás autenticado.${reset}"
     exit 1
 fi
