@@ -3,7 +3,7 @@ package com.unir.auth.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unir.auth.dto.UserDTO;
 import com.unir.auth.enumm.UserRole;
-import com.unir.gestorvacantes.model.Application;
+import com.unir.gestorvacantes.model.Solicitud;
 import com.unir.gestorvacantes.model.UserProfile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name = "user_table")
@@ -43,13 +44,14 @@ public class User {
     @Column(name = "user_role")
     private UserRole role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference("user-profile")
-    private List<UserProfile> userProfiles;
+    private List<UserProfile> profiles = new ArrayList<>();
 
-    @OneToMany( mappedBy = "user", fetch = FetchType.EAGER )
+    @OneToMany(mappedBy = "user")
     @JsonManagedReference("user-application")
-    private List<Application> applications;
+    private List<Solicitud> solicitudes = new ArrayList<>();
+
 
 
     public User(Long id, String name, String surname, String email, String password, int enabled,  UserRole role) {
@@ -62,12 +64,6 @@ public class User {
         this.role = role;
     }
 
-    public User(Long id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
 
     public UserDTO toDTO() {
         return  new UserDTO(

@@ -1,8 +1,6 @@
 package com.unir.auth.dto;
 import com.unir.auth.enumm.UserRole;
 import com.unir.auth.model.User;
-import com.unir.gestorvacantes.model.Application;
-import com.unir.gestorvacantes.model.UserProfile;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -12,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
 
 
 @Getter

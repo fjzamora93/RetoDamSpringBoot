@@ -4,14 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.unir.auth.model.User;
-import com.unir.gestorvacantes.dto.UserProfileDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
+
 @Entity
-@Table(name = "user_profile")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,31 +19,18 @@ public class UserProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    private Integer idPerfil; // PK
 
-    @Column(name = "name")
-    private String name;
+    @Column(length = 100)
+    private String nombre;
 
-    // Cada UsuarioPErfil solo puede tener un Usuario y un solo perfil
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    @JsonBackReference("user-profile")
+    // Relaciones:
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference("user-profile") // Changed from @JsonIgnore
     private User user;
-
-    public UserProfile(String name, User user) {
-        this.name = name;
-        this.user = user;
-    }
-
-    public UserProfileDTO toUserProfileDto() {
-        return new UserProfileDTO(
-                this.id,
-                this.user.getId(),
-                this.name
-        );
-    }
-
-
 
 
 }

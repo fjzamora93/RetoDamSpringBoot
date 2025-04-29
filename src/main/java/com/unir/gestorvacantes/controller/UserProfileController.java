@@ -1,6 +1,5 @@
 package com.unir.gestorvacantes.controller;
 
-import com.unir.gestorvacantes.dto.UserProfileDTO;
 import com.unir.gestorvacantes.model.UserProfile;
 import com.unir.gestorvacantes.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class UserProfileController {
 
     // AÑADIR PERFIL
     @PostMapping
-    public ResponseEntity<UserProfile> upsertUserProfile(@RequestBody UserProfileDTO userProfile) {
+    public ResponseEntity<UserProfile> upsertUserProfile(@RequestBody UserProfile userProfile) {
         UserProfile savedProfile = userProfileService.upsertUserProfile(userProfile);
         return ResponseEntity.ok(savedProfile);
     }
