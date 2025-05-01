@@ -24,9 +24,10 @@ public class SolicitudController {
         return solicitudService.listarSolicitudes();
     }
 
-    // Obtener solicitud por ID
+
+    // Obtener solicitud por la ID del usuario
     @GetMapping("/{id}")
-    public Optional<Solicitud> obtenerSolicitud(@PathVariable Integer id) {
+    public List<Solicitud> obtenerSolicitud(@PathVariable Integer id) {
         return solicitudService.obtenerSolicitudPorId(id);
     }
 
@@ -48,6 +49,7 @@ public class SolicitudController {
     public void eliminarSolicitud(@PathVariable Integer id) {
         solicitudService.eliminarSolicitud(id);
     }
+
 
     // Cancelar solicitud (cambiando estado)
     @PutMapping("/{id}/cancelar")

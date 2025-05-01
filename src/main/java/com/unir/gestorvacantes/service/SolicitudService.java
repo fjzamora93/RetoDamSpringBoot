@@ -23,8 +23,8 @@ public class SolicitudService {
     }
 
     // Obtener solicitud por ID
-    public Optional<Solicitud> obtenerSolicitudPorId(Integer id) {
-        return solicitudRepository.findById(id);
+    public List<Solicitud> obtenerSolicitudPorId(Integer id) {
+        return solicitudRepository.findByUserId(id);
     }
 
     // Crear o actualizar solicitud
