@@ -12,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,6 +33,21 @@ public class UserService {
         return userRepository.findById(id)
                 .map(User::toDTO)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+    }
+
+    /**
+     * BUSCAR Todos
+     */
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+
+        if (users.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found");
+        }
+
+        return users.stream()
+                .map(User::toDTO)
+                .collect(Collectors.toList());
     }
 
     /**
