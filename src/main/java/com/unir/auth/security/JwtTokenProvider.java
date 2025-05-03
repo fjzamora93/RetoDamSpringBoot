@@ -1,11 +1,9 @@
 package com.unir.auth.security;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
-
-import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -13,9 +11,14 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final SecretKey jwtSecret = Keys.secretKeyFor(SignatureAlgorithm.HS512); // Clave secreta para firmar el token
-    private final long accessTokenExpirationMs = 900000; // 15 minutos en milisegundos
-    private final long refreshTokenExpirationMs = 604800000; // 7 días en milisegundos
+    private final SecretKey jwtSecret;
+
+    private final long accessTokenExpirationMs = 900_000;       // 15 minutos
+    private final long refreshTokenExpirationMs = 604_800_000;  // 7 días
+
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+        this.jwtSecret = Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
 
     // Generar Access Token
     public String createAccessToken(String email) {
@@ -27,7 +30,7 @@ public class JwtTokenProvider {
         return buildToken(email, refreshTokenExpirationMs);
     }
 
-    // Método común para construir tokens
+    // Construcción del token
     private String buildToken(String email, long expirationMs) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMs);
@@ -36,22 +39,21 @@ public class JwtTokenProvider {
                 .subject(email)
                 .issuedAt(now)
                 .expiration(expiryDate)
-                .signWith(jwtSecret)
+                .signWith(jwtSecret, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // Obtener el email desde el token
+    // Obtener email del token
     public String getEmailFromToken(String token) {
-        Claims claims = Jwts.parser()
+        return Jwts.parser()
                 .verifyWith(jwtSecret)
                 .build()
                 .parseSignedClaims(token)
-                .getPayload();
-
-        return claims.getSubject();
+                .getPayload()
+                .getSubject();
     }
 
-    // Validar el token
+    // Validar token
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
@@ -59,19 +61,19 @@ public class JwtTokenProvider {
                     .build()
                     .parseSignedClaims(token);
             return true;
-        } catch (Exception e) {
+        } catch (JwtException | IllegalArgumentException e) {
+            System.out.println("❌ Token inválido: " + e.getMessage());
             return false;
         }
     }
 
-    // Obtener la fecha de expiración del token
+    // Fecha de expiración
     public Date getExpirationDateFromToken(String token) {
-        Claims claims = Jwts.parser()
+        return Jwts.parser()
                 .verifyWith(jwtSecret)
                 .build()
                 .parseSignedClaims(token)
-                .getPayload();
-
-        return claims.getExpiration();
+                .getPayload()
+                .getExpiration();
     }
 }

@@ -57,22 +57,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        if (SecurityContextHolder.getContext().getAuthentication() == null) {
-            String token = extractToken(request);
 
-            if (token != null && jwtTokenProvider.validateToken(token)) {
-                String email = jwtTokenProvider.getEmailFromToken(token);
-                UserDetails user = userService.getUserByEmail(email);
+        String token = extractToken(request);
+        logger.info("🔍 [Filtro JWT] Token recibido: " + token);
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            String email = jwtTokenProvider.getEmailFromToken(token);
+            UserDetails user = userService.getUserByEmail(email);
+            logger.info("👤 [Filtro JWT] Usuario cargado: " + email);
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            logger.info("🔐 [Filtro JWT] Autenticación completada.");
+
+            filterChain.doFilter(request, response);
+        } else {
+            logger.warn("❌ [Filtro JWT] Token inválido o no presente.");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token inválido o expirado");
+            return; // 🔁 CRUCIAL: corta aquí la ejecución
         }
-
-        filterChain.doFilter(request, response);
     }
+
 
 
     private String extractToken(HttpServletRequest request) {

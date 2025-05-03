@@ -41,30 +41,32 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         try {
-            // Autenticar al usuario
+            System.out.println("🔐 Intentando login para: " + loginRequest.getEmail());
+
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
             );
 
-            // Generar tokens
             String accessToken = jwtTokenProvider.createAccessToken(authentication.getName());
             String refreshToken = jwtTokenProvider.createRefreshToken(authentication.getName());
             Date expiration = jwtTokenProvider.getExpirationDateFromToken(accessToken);
 
-            // Obtener detalles del usuario
             UserDetails user = userService.getUserByEmail(loginRequest.getEmail());
 
-            // Crear respuesta
-            LoginResponse loginResponse = new LoginResponse(accessToken, refreshToken, user, expiration);
-
-            return ResponseEntity.ok(loginResponse);
+            return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken, user, expiration));
 
         } catch (BadCredentialsException e) {
-            // Credenciales inválidas
+            System.out.println("❌ Credenciales inválidas: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new LoginResponse("Credenciales inválidas"));
+        } catch (Exception e) {
+            System.out.println("💥 Error en login: " + e.getMessage());
+            e.printStackTrace(); // esto imprime el stacktrace completo
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new LoginResponse("Error interno al autenticar"));
         }
     }
+
 
     // TODO: IMplementar el Doble Factor  al registrase (o mandar un email o algo)
     // TODO: Mejorar el Sign UP para que haga un autologin (coordinarlo con el Front)

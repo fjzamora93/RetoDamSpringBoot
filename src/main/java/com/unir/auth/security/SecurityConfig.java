@@ -52,11 +52,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/auth/**",
-                                "/api/empresas/**",
-                                "/api/categorias/**",
-                                "/api/vacantes/**",
-                                "/api/solicitudes/**"
+                                "/api/auth/**"
                                 ).permitAll() // Permitir acceso público a /api/auth/**
                         .anyRequest().authenticated() // El resto de las rutas requieren autenticación
                 )
