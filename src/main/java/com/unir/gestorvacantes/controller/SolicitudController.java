@@ -56,4 +56,10 @@ public class SolicitudController {
     public void cancelarSolicitud(@PathVariable Integer id) {
         solicitudService.cancelarSolicitud(id);
     }
+
+    // Obtener todas las solicitudes asociadas a una vacante
+    @GetMapping("/vacante/{idVacante}")
+    public List<Solicitud> obtenerSolicitudesPorVacante(@PathVariable Integer idVacante) {
+        return solicitudService.obtenerSolicitudesPorVacante(idVacante);
+    }
 }

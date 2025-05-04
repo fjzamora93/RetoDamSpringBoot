@@ -1,6 +1,7 @@
 package com.unir.gestorvacantes.service;
 
 
+import com.unir.gestorvacantes.model.Empresa;
 import com.unir.gestorvacantes.model.Vacante;
 import com.unir.gestorvacantes.repository.VacanteRepository;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,9 @@ public class VacanteService {
             vacante.setEstatus("CANCELADA");
             vacanteRepository.save(vacante);
         }
+    }
+
+    public List<Vacante> findByEmpresa(Empresa empresa) {
+        return vacanteRepository.findByEmpresa(empresa);
     }
 }

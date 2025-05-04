@@ -11,4 +11,7 @@ public interface SolicitudRepository extends JpaRepository<Solicitud, Integer> {
 
     // Buscar solicitudes a parrtir de la id del usuario
     List<Solicitud> findByUserId(Integer userId);
+
+    List<Solicitud> findByVacanteIdVacante(Integer idVacante);
+
 }

@@ -1,6 +1,7 @@
 package com.unir.gestorvacantes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.unir.auth.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,5 +34,9 @@ public class Empresa {
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Vacante> vacantes;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
 }

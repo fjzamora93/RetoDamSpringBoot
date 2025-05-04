@@ -46,4 +46,8 @@ public class SolicitudService {
             solicitudRepository.save(solicitud);
         }
     }
+
+    public List<Solicitud> obtenerSolicitudesPorVacante(Integer idVacante) {
+        return solicitudRepository.findByVacanteIdVacante(idVacante);
+    }
 }

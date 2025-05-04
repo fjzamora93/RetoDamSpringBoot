@@ -1,6 +1,7 @@
 package com.unir.gestorvacantes.service;
 
 
+import com.unir.auth.model.User;
 import com.unir.gestorvacantes.model.Empresa;
 import com.unir.gestorvacantes.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,9 @@ public class EmpresaService {
     // Eliminar empresa
     public void eliminarEmpresa(Integer id) {
         empresaRepository.deleteById(id);
+    }
+
+    public Optional<Empresa> obtenerEmpresaPorUsuario(User user) {
+        return empresaRepository.findByUser(user);
     }
 }
