@@ -112,4 +112,12 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
         userRepository.delete(user);
     }
+
+    public void disableUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
+
+        user.setEnabled(0); // cambia el flag
+        userRepository.save(user);
+    }
 }

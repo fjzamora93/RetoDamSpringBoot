@@ -36,8 +36,7 @@ public class UserController {
 
     @PutMapping("/update")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO user) {
-        UserDTO authenticatedUser = getAuthenticatedUser();
-        user.setEmail(authenticatedUser.getEmail());
+        // No sobreescribas el email, deja el que viene en el body
         UserDTO updatedUser = userService.update(user);
         return ResponseEntity.ok(updatedUser);
     }
@@ -49,7 +48,11 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> disableUser(@PathVariable Long id) {
+        userService.disableUserById(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
     /** Método auxiliar para obtener el usuario autenticado desde JWT */

@@ -53,10 +53,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/auth/**"
-//                                "/api/empresas/**",
-//                                "/api/categorias/**",
-//                                "/api/vacantes/**",
-//                                "/api/solicitudes/**"
                                 ).permitAll() // Permitir acceso público a /api/auth/**
                         .anyRequest().authenticated() // El resto de las rutas requieren autenticación
                 )
