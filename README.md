@@ -58,10 +58,10 @@ Para la dockerización, en primer lugar se ha creado un dockerfile tal que así:
 FROM openjdk:19-jdk-slim
 
 # Copia el archivo JAR generado a la imagen Docker
-COPY target/SpringBootRetoDam-1.0-SNAPSHOT.jar /usr/app/SpringBootRetoDam-1.0-SNAPSHOT.jar
+COPY target/SpringBootRoleApp-1.0-SNAPSHOT.jar /usr/app/SpringBootRetoDam-1.0-SNAPSHOT.jar
 
 # Define el punto de entrada de la aplicación
-ENTRYPOINT ["java", "-jar", "/usr/app/SpringBootRetoDam-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/usr/app/SpringBootRoleApp-1.0-SNAPSHOT.jar"]
 
 # Exponer el puerto en el que tu app correrá
 EXPOSE 8080
